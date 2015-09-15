@@ -51,3 +51,10 @@ diff_asm:
 		add r14, 16
 		loop
     ret
+
+
+
+
+;  http://x86.renejeschke.de/
+; PMAXUB para sacar maximo
+; PSUBSB saturacion, para sacar modulo
