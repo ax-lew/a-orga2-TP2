@@ -3,6 +3,14 @@
 #include <math.h>
 #include "../tp2.h"
 
+int max(int a, int b){
+	if (a<b){
+		return b;
+	} else{
+		return a;
+	}
+}
+
 void diff_c (
 	unsigned char *src,
 	unsigned char *src_2,
@@ -17,4 +25,38 @@ void diff_c (
 	unsigned char (*src_2_matrix)[src_2_row_size] = (unsigned char (*)[src_2_row_size]) src_2;
 	unsigned char (*dst_matrix)[dst_row_size] = (unsigned char (*)[dst_row_size]) dst;
 
+
+	for(int i = 0; i<m; i++){
+		for (int j = 0; j<n*4; j+=4){
+			int blue = src[j+i*n*4] - src_2[j+i*n*4];
+			int green = src[j+i*n*4+1] - src_2[j+i*n*4+1];
+			int red = src[j+i*n*4+2] - src_2[j+i*n*4+2];
+			blue = max(blue, -blue);
+			green = max(green, -green);
+			red = max(red, -red);
+			int color = max(max(blue, green), red);
+			dst[j+i*n*4] = color;
+			dst[j+i*n*4+1] = color;
+			dst[j+i*n*4+2] = color;
+			dst[j+i*n*4+3] = 255;			
+		}
+	}
+
+	/*
+	for(int i = 0; i<m; i++){
+		for (int j = 0; j<n*4; j+=4){
+			int blue = src[i][j] - src_2[i][j];
+			int green = src[i][j+1] - src_2[i][j+1];
+			int red = src[i][j+2] - src_2[i][j+2];
+			blue = max(blue, -blue);
+			green = max(green, -green);
+			red = max(red, -red);
+			int color = max(max(blue, green), red);
+			dst[i][j] = color;
+			dst[i][j+1] = color;
+			dst[i][j+2] = color;
+			dst[i][j+3] = 255;			
+		}
+	}
+	*/
 }
