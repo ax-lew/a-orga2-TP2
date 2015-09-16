@@ -46,26 +46,20 @@ void blur_c    (
     }
 printf("%f ",c);
 printf("\n\n\n\n\n\n");
-/*
-  for(int i= 0; i<radius*2+1; i++){
-    	for(int j = 0; j<radius*2+1;j++){
-    		matrizcomb[i][j]=1;
-    	}
-    }
-*/
 
 
-    for(int i = radius*ancho; i < filas*ancho-radius*ancho; i= i + ancho){
+
+    for(int i = radius; i < filas-radius; i++){
     	
     	for(int j = radius*4; j<ancho-radius*4; j = j + 4){
     				
     		float blue  = 0;
     		float green = 0;
     		float red   = 0;
-
+            /*
     		int a = 0;
     		int b = 0;
-
+            
     		for(int h = i  - radius*ancho; h < i + radius*ancho; h = h+ancho){    			
     			for(int k = j - radius*4; k < j + radius*4; k = k+4){    			
 	    			blue  = blue  +src[h+k+0] *matrizcomb[a][b];
@@ -75,19 +69,35 @@ printf("\n\n\n\n\n\n");
     			}
     			a++;
     		}
-  		    		
-    	// printf("%f\n",blue );
+  		    */
+            for (int h = 0; h<2*radius+1; h++){
+                for (int k = 0; k<2*radius+1; k++){
+                    //printf("%d\n", src_matrix[i+(h-radius)][j+(k-radius)*4]);
+                    //printf("%f\n", matrizcomb[h][k]);
+
+                    blue = blue + (src_matrix[i+(h-radius)][j+(k-radius)*4] * matrizcomb[h][k]);
+                    green = green + (src_matrix[i+(h-radius)][j+(k-radius)*4+1] * matrizcomb[h][k]);
+                    red = red + (src_matrix[i+(h-radius)][j+(k-radius)*4+2] * matrizcomb[h][k]);
+                    //printf("%f\n",blue );
+                    //printf("%f\n",green );
+                    //printf("%f\n",red );
+
+                }
+            }
+
+
+    	//printf("%f\n",blue );
 
 
     		unsigned char blue2 = blue;
     		unsigned char green2 = green;
     		unsigned char red2 = red;
-    	//	 printf("%d\n",blue2 );
+    	//printf("%d\n",blue2 );
     		
-    		dst[i+j]   = blue;
-    		dst[i+j+1] = green;
-    		dst[i+j+2] = red;
-    		dst[i+j+3] = 255;
+    		dst_matrix[i][j]   = blue2;
+    		dst_matrix[i][j+1] = green2;
+    		dst_matrix[i][j+2] = red2;
+    		dst_matrix[i][j+3] = 255;
 
     	
     	}
