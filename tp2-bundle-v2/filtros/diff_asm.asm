@@ -4,9 +4,12 @@ global diff_asm
 
 
 section .data	
-	permu1: DB 13,15,14,12,9,11,10,8,5,7,6,4,1,3,2,0
-	permu2: DB 14,13,15,12,10,9,11,8,6,5,7,4,2,1,3,0
-	transp: DB 0,0,0,255,0,0,0,255,0,0,0,255,0,0,0,255
+	;permu1: DB 13,15,14,12,9,11,10,8,5,7,6,4,1,3,2,0
+	;permu2: DB 14,13,15,12,10,9,11,8,6,5,7,4,2,1,3,0
+	;transp: DB 0,0,0,255,0,0,0,255,0,0,0,255,0,0,0,255
+	permu1: DB 0,2,3,1,4,6,7,5,8,10,11,9,12,14,15,13
+	permu2: DB 0,3,1,2,4,7,5,6,8,11,9,10,12,15,13,14
+	transp: DB 255,0,0,0,255,0,0,0,255,0,0,0,255,0,0,0
 
 section .text
 ;void diff_asm    (
@@ -34,9 +37,6 @@ diff_asm:
 	xor rbx, rbx
 	mov r15, rcx 		; R15 = filas
 	mov rbx, r8 		; RBX = cols
-
-	
-	
 	
 
 
@@ -71,10 +71,10 @@ diff_asm:
 		pmaxub xmm0, xmm1 
 		pmaxub xmm0, xmm2 				; xmm0 = [max(a0,b0,c0),max(a0,b0,c0),max(a0,b0,c0),d0, .....]
 		
-		movdqu xmm1, [transp] 
-		por xmm0, xmm1 					; xmm0 = [max(a0,b0,c0),max(a0,b0,c0),max(a0,b0,c0),255, .....]
+		;movdqu xmm1, [transp] 
+		;por xmm0, xmm1 					; xmm0 = [max(a0,b0,c0),max(a0,b0,c0),max(a0,b0,c0),255, .....]
 
-		movdqu [R14], xmm0	 			; o fprint ?
+		movdqu [R14], xmm0	 			
 		add r14, 16
 		loop .ciclo
 
