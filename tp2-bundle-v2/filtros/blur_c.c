@@ -13,8 +13,10 @@ void blur_c    (
     float sigma,
     int radius)
 {
-    unsigned char (*src_matrix)[cols*4] = (unsigned char (*)[cols*4]) src;
-    unsigned char (*dst_matrix)[cols*4] = (unsigned char (*)[cols*4]) dst;
+    int ancho = cols*4;
+
+    unsigned char (*src_matrix)[ancho] = (unsigned char (*)[ancho]) src;
+    unsigned char (*dst_matrix)[ancho] = (unsigned char (*)[ancho]) dst;
 
     float matrizcomb[radius*2+1][radius*2+1];
     float primermultiplicando = 1/(2 * M_PI * pow(sigma,2));
@@ -36,7 +38,14 @@ void blur_c    (
     	}
     	printf("\n");
     }
-
+    float c = 0;
+    for(int i= 0; i<radius*2+1; i++){
+    	for(int j = 0; j<radius*2+1;j++){
+    		c = c + matrizcomb[i][j];
+    	}    	
+    }
+printf("%f ",c);
+printf("\n\n\n\n\n\n");
 /*
   for(int i= 0; i<radius*2+1; i++){
     	for(int j = 0; j<radius*2+1;j++){
@@ -46,8 +55,9 @@ void blur_c    (
 */
 
 
-    for(int i = radius*cols; i < filas*cols; i= i + cols){
-    	for(int j = radius*4; j<cols*4-radius*4; j = j + 4){
+    for(int i = radius*ancho; i < filas*ancho-radius*ancho; i= i + ancho){
+    	
+    	for(int j = radius*4; j<ancho-radius*4; j = j + 4){
     				
     		float blue  = 0;
     		float green = 0;
@@ -56,8 +66,8 @@ void blur_c    (
     		int a = 0;
     		int b = 0;
 
-    		for(int h = i  - radius; h < i + radius; h = h+cols){    			
-    			for(int k = j - radius*4; k < j + radius; k = k+4){    			
+    		for(int h = i  - radius*ancho; h < i + radius*ancho; h = h+ancho){    			
+    			for(int k = j - radius*4; k < j + radius*4; k = k+4){    			
 	    			blue  = blue  +src[h+k+0] *matrizcomb[a][b];
 	    			green = green +src[h+k+1] *matrizcomb[a][b];
 	    			red	  = red   +src[h+k+2] *matrizcomb[a][b];
@@ -65,14 +75,18 @@ void blur_c    (
     			}
     			a++;
     		}
+  		    		
+    	// printf("%f\n",blue );
+
 
     		unsigned char blue2 = blue;
     		unsigned char green2 = green;
     		unsigned char red2 = red;
+    	//	 printf("%d\n",blue2 );
     		
-    		dst[i+j]   = blue2;
-    		dst[i+j+1] = green2;
-    		dst[i+j+2] = red2;
+    		dst[i+j]   = blue;
+    		dst[i+j+1] = green;
+    		dst[i+j+2] = red;
     		dst[i+j+3] = 255;
 
     	
