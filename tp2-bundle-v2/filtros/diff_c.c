@@ -35,9 +35,10 @@ void diff_c (
 			green = max(green, -green);
 			red = max(red, -red);
 			int color = max(max(blue, green), red);
-			dst[j+i*n*4] = color;
-			dst[j+i*n*4+1] = color;
-			dst[j+i*n*4+2] = color;
+			unsigned char result = color;
+			dst[j+i*n*4] = result;
+			dst[j+i*n*4+1] = result;
+			dst[j+i*n*4+2] = result;
 			dst[j+i*n*4+3] = 255;			
 		}
 	}
@@ -60,3 +61,9 @@ void diff_c (
 	}
 	*/
 }
+
+
+
+
+
+
