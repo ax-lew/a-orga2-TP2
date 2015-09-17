@@ -43,23 +43,6 @@ void diff_c (
 		}
 	}
 
-	/*
-	for(int i = 0; i<m; i++){
-		for (int j = 0; j<n*4; j+=4){
-			int blue = src[i][j] - src_2[i][j];
-			int green = src[i][j+1] - src_2[i][j+1];
-			int red = src[i][j+2] - src_2[i][j+2];
-			blue = max(blue, -blue);
-			green = max(green, -green);
-			red = max(red, -red);
-			int color = max(max(blue, green), red);
-			dst[i][j] = color;
-			dst[i][j+1] = color;
-			dst[i][j+2] = color;
-			dst[i][j+3] = 255;			
-		}
-	}
-	*/
 }
 
 

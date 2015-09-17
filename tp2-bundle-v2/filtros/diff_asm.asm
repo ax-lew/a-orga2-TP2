@@ -4,12 +4,9 @@ global diff_asm
 
 
 section .data	
-	;permu1: DB 13,15,14,12,9,11,10,8,5,7,6,4,1,3,2,0
-	;permu2: DB 14,13,15,12,10,9,11,8,6,5,7,4,2,1,3,0
-	;transp: DB 0,0,0,255,0,0,0,255,0,0,0,255,0,0,0,255
-	permu1: DB 0,2,3,1,4,6,7,5,8,10,11,9,12,14,15,13
-	permu2: DB 0,3,1,2,4,7,5,6,8,11,9,10,12,15,13,14
-	transp: DB 255,0,0,0,255,0,0,0,255,0,0,0,255,0,0,0
+	permu1: DB 1,2,0,3,5,6,4,7,9,10,8,11,13,14,12,15
+	permu2: DB 2,0,1,3,6,4,5,7,10,8,9,11,14,12,13,15
+	transp: DB 0,0,0,255,0,0,0,255,0,0,0,255,0,0,0,255
 
 section .text
 ;void diff_asm    (
@@ -48,12 +45,12 @@ diff_asm:
 	shr rcx, 2 			; rcx = filas*cols/4
 
 	.ciclo:
-		movdqu xmm0, [r12] 			; xmm0 = [b00,g00,r00,a00, .....]
-		movdqu xmm1, [r13] 			; xmm1 = [b10,g10,r0,a10, .....]
+		movdqu xmm0, [r12] 				; xmm0 = [b00,g00,r00,a00, .....]
+		movdqu xmm1, [r13] 				; xmm1 = [b10,g10,r0,a10, .....]
 		add r12, 16
 		add r13, 16
 
-		movdqu xmm2, xmm0			; xmm2 = [b00,g00,r00,a00, .....]
+		movdqu xmm2, xmm0				; xmm2 = [b00,g00,r00,a00, .....]
 		psubusb xmm0, xmm1 				; xmm0 = [b00-b10,g00-g10,r00-r10,a00-a10, .....]
 
 		psubusb xmm1, xmm2 				; xmm1 = [b10-b00,g10-g00,r10-r00,a10-a00, .....]
@@ -71,8 +68,8 @@ diff_asm:
 		pmaxub xmm0, xmm1 
 		pmaxub xmm0, xmm2 				; xmm0 = [max(a0,b0,c0),max(a0,b0,c0),max(a0,b0,c0),d0, .....]
 		
-		;movdqu xmm1, [transp] 
-		;por xmm0, xmm1 					; xmm0 = [max(a0,b0,c0),max(a0,b0,c0),max(a0,b0,c0),255, .....]
+		movdqu xmm1, [transp] 
+		por xmm0, xmm1 					; xmm0 = [max(a0,b0,c0),max(a0,b0,c0),max(a0,b0,c0),255, .....]
 
 		movdqu [R14], xmm0	 			
 		add r14, 16
