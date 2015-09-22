@@ -7,6 +7,22 @@
 
 
 
+float* matrizcmb(float sigma, int radius){
+
+    float* matrizcomb = malloc((radius*2+1)*(radius*2+1)*4);
+    float (*matrizcomb_matrix)[(radius*2+1)*4] = (float (*)[(radius*2+1)*4]) matrizcomb;
+    float primermultiplicando = 1/(2 * M_PI * pow(sigma,2));
+    float potdividendo = 2*pow(sigma,2);
+
+    for(int i= 0; i<radius*2+1; i++){
+        for(int j = 0; j<radius*2+1;j++){
+            float potencia = - ( (pow(radius-i,2) + pow(radius-j,2)) / potdividendo ) ;
+            matrizcomb[i][j]=primermultiplicando*pow(M_E,potencia);
+        }
+    }
+    return matrizcomb;
+}
+
 void blur_c    (
     unsigned char *src,
     unsigned char *dst,
