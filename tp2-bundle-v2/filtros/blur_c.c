@@ -5,6 +5,8 @@
 #define M_PI 3.14159265358979323846
 #define M_E 2.71828182846
 
+
+
 void blur_c    (
     unsigned char *src,
     unsigned char *dst,
