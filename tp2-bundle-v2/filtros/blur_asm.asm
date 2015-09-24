@@ -43,63 +43,67 @@ blur_asm:
     push r15
     push rbx
 
-    mov r12, rdi 			;src	
-    mov r13, rsi			;dest
-    mov r14, rdx			;filas	
-    mov r15, rcx			;columnas
-    mov rbx, r8				;radio	
+    mov r12, rdi 									; r12 = src	
+    mov r13, rsi									; r13 = dest
+    mov r14, rdx									; r14 = filas	
+    mov r15, rcx									; r15 = columnas
+    mov rbx, r8										; rbx = radio	
 
 
 	
-	mov rdi, radius 
+	mov rdi, radius
+	sub rsp, 8 
     call matrizcmb
-    mov rdi, rax
+    add rsp, 8
+    push rsp
+    mov rdi, rax 									; rdi = matrix
 
 	;CALCULO CANTIDAD DE PIXELES A APLICAR EFECTO BLUR  (SACANDO LOS DEL RADIO)
 
 	mov rax, cols 			; rax = columnas 
-	mov r5, radius 			; r5 = radio
-	mul r5 					; rax = columnas*radio
+	mov rbp, radius 			; rbp = radio
+	mul rbp 					; rax = columnas*radio
 	shl rax,2 				; rax = columnas*radio*4
-	mov r5, radius 			; r5 = radio
-	shl r5, 2 				; r5 = radio*4
-	add rax, r5 			; rax = columnas*radio*4 + radio*4
-	mov r2, rax 			; r2 = cantidad de iteraciones
+	mov rbp, radius 			; rbp = radio
+	shl rbp, 2 				; rbp = radio*4
+	add rax, rbp 			; rax = columnas*radio*4 + radio*4
+	mov r8, rax 									; r8 = cantidad de iteraciones
 
 	;CALCULO CUANTOS PIXELES POR FILA TENGO Q PROCESAR ANTES DE LLEGAR AL RADIO
 
-	xor r4, r4
- 	mov r4, cols
- 	sub r4, radius 				; r4 = limite (hasta que columna llega rdi)
+	xor rsi, rsi
+ 	mov rsi, cols
+ 	sub rsi, radius 									; rsi = limite (hasta que columna llega rdi)
 
  	;CALCULO PIXELES A IGNORAR CUANDO LLEGO AL RADIO
 
- 	mov r6, radius
-	shl r6, 3 					; r6 = cuanto avanza si llega al limite
+ 	mov rsp, radius
+	shl rsp, 3 					
+	sub rsp, 4 										; rsp = cuanto avanza si llega al limite
 
 	;CALCULO EN QUE PIXEL EMPIEZO
 
-	mov r5, cols
+	mov rbp, cols
 	mov rax, radius
-	mul r5							; revisar multiplicaciones (con numeros grande se pierde precision)
+	mul rbp							; revisar multiplicaciones
 	shl rax, 2
 	mov src, rax
 	mov dst, rax
 
 	;CALCULO COMO PARARME EN EL PRIMER VECINO
 
-	mov r5,radius
+	mov rbp,radius
 	mov rax,4
-	mul r5
+	mul rbp
 	mov r10, rax
-	mov r5, cols
+	mov rbp, cols
 	mov rax, 4
-	mul r5
-	add r10,rax
+	mul rbp
+	add r10,rax 									; r10 = 
 
-	pxor acumBl4, acumBl4
-	pxor acumGr5, acumGr5
-	pxor acumRd6, acumRd6
+	pxor acumBl4, acumBl4 							; xmm4 = 0
+	pxor acumGr5, acumGr5 							; xmm5 = 0
+	pxor acumRd6, acumRd6 							; xmm6 = 0
 
 
 	; rdi = matriz combolucion
@@ -107,24 +111,24 @@ blur_asm:
 	; acumBl4 = acumulador azul
 	; acumGr5 = acumulador verde
 	; acumRd6 = acumulador rojo
-	; r2 = cantidad de iteraciones
-	; r3 = contador auxiliar = radio
-	
+	; r8 = cantidad de iteraciones
+	; rax = contador auxiliar = radio
+	push rdi
 	.ciclo:
 		mov r9, src
-		sub r9, r10 					; r9 = primer vecino
+		sub r9, r10 								; r9 = primer vecino
 		
 		mov r11, radius
-		shl r11, 1						; columnas de la matriz de combolucion
+		shl r11, 1									; r11 = columnas de la matriz de combolucion
 		.filas:
 			mov rcx, radius
 			shl rcx, 1
 			add rcx, 1
-			shr rcx, 2 						; rcx = cantidad de iteraciones por fila, (radio*2+1)/4  porque agarro de a 4
+			shr rcx, 2 								; rcx = cantidad de iteraciones por fila, (radio*2+1)/4  porque agarro de a 4
 			.vecinos:
-				mov r1, r9						; r1   = primer vecino
-				movdqu xmm0, [r1] 				; xmm0 = [b0,g0,r0,a0,.....]
-				add r1, 16
+				mov rdx, r9							; rdx   = primer vecino
+				movdqu xmm0, [rdx] 					; xmm0 = [b0,g0,r0,a0,.....]
+				add rdx, 16
 				movdqu xmm1, [rdi] 				; cuidado, son floats. falta volver a poner rdi como antes
 				add rdi, 16
 				
@@ -149,10 +153,10 @@ blur_asm:
 				addps acumGr5, xmm2
 
 				movups xmm2, xmm0 			; xmm2 = [b0,g0,r0,a0,.....]
-				pshufb xmm2, [copiarred] 	; xmm2 = [r0,r1,r2,r3...]
-				punpcklbw xmm2, xmm3 		; xmm2 = [0,r0,0,r1,0,r2,0,r3...]
+				pshufb xmm2, [copiarred] 	; xmm2 = [r0,rdx,r2,r3...]
+				punpcklbw xmm2, xmm3 		; xmm2 = [0,r0,0,rdx,0,r2,0,r3...]
 				punpcklwd xmm2, xmm3 		; xmm2 = [0,0,0,r0...]
-				cvtdq2ps xmm2, xmm2 		; xmm2 = [r0, r1, r2, r3] (en floats)
+				cvtdq2ps xmm2, xmm2 		; xmm2 = [r0, rdx, r2, r3] (en floats)
 
 				mulps xmm2, xmm1
 				addps acumRd6, xmm2
@@ -167,31 +171,57 @@ blur_asm:
 			; sumar todos los acum y dejar el alpha en 255 (cuidado con la saturacion)
 			
 			haddps acumBl4, acumBl4
-			haddps acumBl4, acumBl4				; acumBl4 = [...,suma]
+			haddps acumBl4, acumBl4				; acumBl4 = [...,suma1]
 
 			haddps acumGr5, acumGr5
-			haddps acumGr5, acumGr5				; acumGr5 = [...,suma]
+			haddps acumGr5, acumGr5				; acumGr5 = [...,suma2]
 
 			haddps acumRd6, acumRd6
-			haddps acumRd6, acumRd6				; acumRd6 = [...,suma]
-			
-			movAlgo [dst], acumBl4
- 			xor acumBl4, acumBl4
-			add r3, 1
+			haddps acumRd6, acumRd6				; acumRd6 = [...,suma3]
 
-			cmp r3, r4
+			;movd ebp, acumBl4
+			cvtss2si ebp, acumBl4
+			mov [dst], spl
+			add dst, 1
+
+			;movd ebp, acumGr5
+			cvtss2si ebp, acumGr5
+			mov [dst], spl
+			add dst, 1
+
+			;movd ebp, acumRd6
+			cvtss2si ebp, acumRd6
+			mov [dst], spl
+			add dst, 1			
+
+
+ 			pxor acumBl4, acumBl4
+ 			pxor acumGr5, acumGr5
+ 			pxor acumRd6, acumRd6
+
+			add rax, 1
+
+			cmp rax, rsi
 			je .sumarRadio
 
-			add dst, 4
 			jmp .seguir
 
 			.sumarRadio:
-				xor r3, r3
+				xor rax, rax
 				
-				add dst, r6
+				add dst, rsp   
 			.seguir:
-				sub r2, 1
-				cmp r2, 0
+				sub r8, 1
+				cmp r8, 0
 				jne .ciclo
 
+	pop rsp
+	pop rbx
+	pop r15
+	pop r14
+	pop r13
+	pop r12
+	pop rbp
     ret
+
+
