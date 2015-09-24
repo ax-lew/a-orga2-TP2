@@ -47,9 +47,10 @@ blur_asm:
 
 	
 	mov rdi, radius
-	sub rsp, 8
+	sub rsp, 8 
     call matrizcmb
     add rsp, 8
+    push rsp
     mov rdi, rax 									; rdi = matrix
 
 	;CALCULO CANTIDAD DE FILAS  (SACANDO LOS DEL RADIO)
@@ -62,19 +63,19 @@ blur_asm:
 
 	xor rsi, rsi
  	mov rsi, cols
-  	add rsi, radius 									
- 	add rsi, radius 					; rsi = limite (hasta que columna llega rdi)
+ 	sub rsi, radius 									
+ 	sub rsi, radius 					; rsi = limite (hasta que columna llega rdi)
  	shr rsi, 2							; divido por 4 pues avanzo de a 4
- 	
+ 	sub rsi, 1
 
  	;CALCULO PIXELES A IGNORAR CUANDO LLEGO AL RADIO
 
- 	mov r14, radius
-	shl r14, 3					
+ 	mov rsp, radius
+	shl rsp, 3 					
 	mov rax, rsi
-	;mov r10, 0x00000000000000FF
-	;and r10, rsi
-	;add r14, r10 										; r14 = cuanto avanza si llega al limite
+	mov r10, 0x00000000000000FF
+	and r10, rsi
+	add rsp, r10 										; rsp = cuanto avanza si llega al limite
 
 
 
@@ -85,33 +86,28 @@ blur_asm:
 	mov rax, radius
 	mul rbp							; revisar multiplicaciones
 	shl rax, 2
-	mov rbp, radius
-	shl rbp, 2
-	add rax, rbp
-	add src, rax
-	add dst, rax
+	mov src, rax
+	mov dst, rax
 
 	;CALCULO COMO PARARME EN EL PRIMER VECINO
 
-	mov rbp, radius
-	shl rbp, 2
-	mov r10, cols
-	shl r10, 2
-	mov rax, radius
-	mul r10
+	mov rbp,radius
+	mov rax,4
+	mul rbp
 	mov r10, rax
-	add r10, rbp 
+	mov rbp, cols
+	mov rax, 4
+	mul rbp
+	add r10,rax 									; r10 = 
 
 	
 
-
+	; r11 = cols*4     FALTA HACER
 	; rdi = matriz combolucion
-	; r10 = radius*4 + radius*cols*4
-	; r8 = filas sin las afectadas por el radio
+	; r10 = radius*4 + radius*cols*4	
+	; rax = contador auxiliar = radio*2    FALTA HACER
 
-
-	mov r8, 2
-	push rdi
+	
 	.cicloFils:
 
 		xor rdx, rdx
@@ -132,15 +128,14 @@ blur_asm:
 			xor rax, rax
 			mov rax, radius
 			shl rax, 1
-			pop rdi
-			push rdi
+
 			.vecFilas:
 				xor rcx, rcx
 				mov rcx, radius
 				shl rcx, 1
 				.vecCols:
 					movdqu xmm1, [r9] 						; xmm1 = vecinos
-					add r9, 4
+					add r9, 16
 					movdqu xmm2, [rdi] 						; xmm2 = matriz
 					add rdi, 4
 					pshufd xmm2, xmm2, 0 					; esta bien??
@@ -177,13 +172,7 @@ blur_asm:
 					loop .vecCols
 
 				sub r9, radius
-				sub r9, radius
-				sub r9, 1
-				add r9, r15
-				add r9, r15
-				add r9, r15
-				add r9, r15
-
+				add r9, r11
 				sub rax, 1
 				cmp rax, 0
 				jne .vecFilas
@@ -210,14 +199,20 @@ blur_asm:
 			cmp rdx, rsi
 			jne .cicloCols
 
-		add src,r14
-		add dst,r14
+		add src,rsp
+		add dst,rsp
 
 		sub r8, 1
 		cmp r8, 0
-		jne .cicloFils				
-	
-	pop rdi
+		jne .cicloFils
+
+
+		jmp .cicloFils
+			
+
+
+
+	pop rsp
 	pop rbx
 	pop r15
 	pop r14
