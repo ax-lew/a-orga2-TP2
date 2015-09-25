@@ -62,19 +62,22 @@ blur_asm:
 
 	xor rsi, rsi
  	mov rsi, cols
-  	add rsi, radius 									
- 	add rsi, radius 					; rsi = limite (hasta que columna llega rdi)
+  	sub rsi, radius 									
+ 	sub rsi, radius 					; rsi = limite (hasta que columna llega rdi)
  	shr rsi, 2							; divido por 4 pues avanzo de a 4
  	
 
  	;CALCULO PIXELES A IGNORAR CUANDO LLEGO AL RADIO
 
  	mov r14, radius
-	shl r14, 3					
-	mov rax, rsi
-	;mov r10, 0x00000000000000FF
-	;and r10, rsi
-	;add r14, r10 										; r14 = cuanto avanza si llega al limite
+ 	add r14, 1 			; TAL VEZ?
+	shl r14, 3				
+	mov r10, 0x0000000000000003
+	and r10, rsi
+	;sub r10, 1 		; TAL VEZ?
+	shl r10, 2
+	add r14, r10 										; r14 = cuanto avanza si llega al limite
+
 
 
 
@@ -103,14 +106,14 @@ blur_asm:
 	add r10, rbp 
 
 	
-
+	; r -i asm blur ../img/lena32.bmp 5 15
 
 	; rdi = matriz combolucion
 	; r10 = radius*4 + radius*cols*4
 	; r8 = filas sin las afectadas por el radio
 
 
-	mov r8, 2
+	
 	push rdi
 	.cicloFils:
 
@@ -121,9 +124,6 @@ blur_asm:
 			mov r9, src
 			sub r9, r10 								; r9 = posicion primer vecino
 			
-			mov r11, radius
-			shl r11, 1									; r11 = columnas de la matriz de combolucion
-
 			pxor xmm15, xmm15 			; primer acumulador
 			pxor xmm14, xmm14 			; segundo
 			pxor xmm13, xmm13 			; tercero
@@ -132,12 +132,15 @@ blur_asm:
 			xor rax, rax
 			mov rax, radius
 			shl rax, 1
+			; sub rcx, 1 		;TAL VEZ?
+
 			pop rdi
 			push rdi
 			.vecFilas:
 				xor rcx, rcx
 				mov rcx, radius
 				shl rcx, 1
+				; sub rcx, 1 		;TAL VEZ?
 				.vecCols:
 					movdqu xmm1, [r9] 						; xmm1 = vecinos
 					add r9, 4
@@ -178,7 +181,13 @@ blur_asm:
 
 				sub r9, radius
 				sub r9, radius
-				sub r9, 1
+				sub r9, radius
+				sub r9, radius
+				sub r9, radius
+				sub r9, radius
+				sub r9, radius
+				sub r9, radius
+				sub r9, 1 				; TAL VEZ?
 				add r9, r15
 				add r9, r15
 				add r9, r15
@@ -199,7 +208,7 @@ blur_asm:
 			packssdw xmm13, xmm12 			; consultar (con signo)
 			packuswb xmm15, xmm13 			; creo que esta todo al reves
 
-					; falta mascara para transparencia
+			; falta mascara para transparencia
 
 			movdqu [dst], xmm15
 			
