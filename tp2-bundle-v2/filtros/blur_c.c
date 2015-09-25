@@ -40,25 +40,22 @@ float *matrizcmb(unsigned char *src,
     {
     //printf("%d\n", );
     int ancho = cols*4;
-    float *inicio = malloc((radius*2+1)*(radius*2+1)*sizeof(float*)); //mas de lo que necesito
+    float *inicio = malloc((radius*2+1)*(radius*2+1)*sizeof(float)); //mas de lo que necesito
     //printf("%d\n",(radius*2+1)*(radius*2+1) );
     unsigned char (*src_matrix)[ancho] = (unsigned char (*)[ancho]) src;
     unsigned char (*dst_matrix)[ancho] = (unsigned char (*)[ancho]) dst;
     float matrizcomb[radius*2+1][radius*2+1];
     float primermultiplicando = 1/(2 * M_PI * pow(sigma,2));
- 
     float potdividendo = 2*pow(sigma,2);
-    //printf("%f\n",potdividendo );
+
+   
     int k = 0;
     for(int i= 0; i<radius*2+1; i++){
         for(int j = 0; j<radius*2+1;j++){
             float potencia = - ( (pow(radius-i,2) + pow(radius-j,2)) / potdividendo ) ;
-            //printf("%d\n",potencia );
             matrizcomb[i][j]=primermultiplicando*pow(M_E,potencia);
-            //printf("%f ", matrizcomb[i][j]);
-            inicio[k] = matrizcomb[i][j];
-            //printf("%f ", inicio[k] );
-            k+=4;
+            inicio[k] = matrizcomb[i][j];            
+            k+=1;   
         }
     }
 
@@ -83,9 +80,7 @@ void blur_c    (
 
     float matrizcomb[radius*2+1][radius*2+1];
     float primermultiplicando = 1/(2 * M_PI * pow(sigma,2));
-    printf("%f\n",primermultiplicando );
-    float potdividendo = 2*pow(sigma,2);
-    printf("%f\n",potdividendo );
+    float potdividendo = 2*pow(sigma,2);   
 
     for(int i= 0; i<radius*2+1; i++){
     	for(int j = 0; j<radius*2+1;j++){
