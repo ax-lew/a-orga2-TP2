@@ -108,7 +108,7 @@ blur_asm:
 
 	
 	; r -i asm blur ../img/lena32.bmp 5 15
-	; b blur_asm.asm:80
+	; b blur_asm.asm:151
 
 
 	; rdi = matriz combolucion
