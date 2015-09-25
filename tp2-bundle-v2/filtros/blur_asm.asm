@@ -64,21 +64,22 @@ blur_asm:
  	mov rsi, cols
   	sub rsi, radius 									
  	sub rsi, radius 					; rsi = limite (hasta que columna llega rdi)
- 	shr rsi, 2							; divido por 4 pues avanzo de a 4
+ 	;shr rsi, 2							; divido por 4 pues avanzo de a 4 (lo hago mas adelante, sino tengo problemas para encontrar el resto)
  	
 
  	;CALCULO PIXELES A IGNORAR CUANDO LLEGO AL RADIO
 
- 	mov r14, radius
- 	add r14, 1 			; TAL VEZ?
-	shl r14, 3				
+ 	mov r14, radius 
+ 	;add r14, 1 			; TAL VEZ?
+	shl r14, 3	
+	;add r14, 4 			; TAL VEZ?			
 	mov r10, 0x0000000000000003
 	and r10, rsi
 	;sub r10, 1 		; TAL VEZ?
 	shl r10, 2
 	add r14, r10 										; r14 = cuanto avanza si llega al limite
 
-
+	shr rsi, 2		
 
 
 
@@ -107,6 +108,8 @@ blur_asm:
 
 	
 	; r -i asm blur ../img/lena32.bmp 5 15
+	; b blur_asm.asm:80
+
 
 	; rdi = matriz combolucion
 	; r10 = radius*4 + radius*cols*4
@@ -132,7 +135,7 @@ blur_asm:
 			xor rax, rax
 			mov rax, radius
 			shl rax, 1
-			; sub rcx, 1 		;TAL VEZ?
+			add rcx, 1 		;TAL VEZ?
 
 			pop rdi
 			push rdi
@@ -140,7 +143,7 @@ blur_asm:
 				xor rcx, rcx
 				mov rcx, radius
 				shl rcx, 1
-				; sub rcx, 1 		;TAL VEZ?
+				add rcx, 1 		;TAL VEZ?
 				.vecCols:
 					movdqu xmm1, [r9] 						; xmm1 = vecinos
 					add r9, 4
