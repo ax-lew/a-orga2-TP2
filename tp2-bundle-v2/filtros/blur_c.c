@@ -5,32 +5,6 @@
 #define M_PI 3.14159265358979323846
 #define M_E 2.71828182846
 
-/*
-
-float* matrizcmb(float sigma, int radius){
-
-    float* matrizcomb = malloc((radius*2+1)*(radius*2+1)*4);
-    float (*matrizcomb_matrix)[(radius*2+1)*4] = (float (*)[(radius*2+1)*4]) matrizcomb;
-    float primermultiplicando = 1/(2 * M_PI * pow(sigma,2));
-    float potdividendo = 2*pow(sigma,2);
-
-    for(int i= 0; i<radius*2+1; i++){
-        for(int j = 0; j<radius*2+1;j++){
-            float potencia = - ( (pow(radius-i,2) + pow(radius-j,2)) / potdividendo ) ;
-            matrizcomb[i][j]=primermultiplicando*pow(M_E,potencia);
-        }
-    }
-
-    for(int i= 0; i<radius*2+1; i++){
-        for(int j = 0; j<radius*2+1;j++){
-            printf("%f ",matrizcomb[i][j]);
-        }
-        printf("\n");
-    }
-
-    return matrizcomb;
-}
-*/
 float *matrizcmb(unsigned char *src,
     unsigned char *dst,
     int cols,
@@ -62,9 +36,6 @@ float *matrizcmb(unsigned char *src,
     return inicio;
 }
 
-
-
-
 void blur_c    (
     unsigned char *src,
     unsigned char *dst,
@@ -89,7 +60,7 @@ void blur_c    (
     		matrizcomb[i][j]=primermultiplicando*pow(M_E,potencia);
     	}
     }
-
+/* Para imprimir la matriz de combolucion
   for(int i= 0; i<radius*2+1; i++){
     	for(int j = 0; j<radius*2+1;j++){
     		printf("%f ",matrizcomb[i][j]);
@@ -105,7 +76,7 @@ void blur_c    (
 printf("%f ",c);
 printf("\n\n\n\n\n\n");
 
-
+*/
 
     for(int i = radius; i < filas-radius; i++){
     	
