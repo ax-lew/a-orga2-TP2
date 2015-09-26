@@ -9,7 +9,8 @@ extern matrizcmb
 	%define dst 				r13
 	%define src 				r12
 
-
+section .data
+	algo: DB 0x00,0x00,0x00,0xFF,0x00,0x00,0x00,0xFF,0x00,0x00,0x00,0xFF,0x00,0x00,0x00,0xFF
 
 	
 section .text
@@ -70,45 +71,45 @@ blur_asm:
  	;CALCULO PIXELES A IGNORAR CUANDO LLEGO AL RADIO
 
  	mov r14, radius 
- 	;add r14, 1 			; TAL VEZ?
-	shl r14, 3	
-	;add r14, 4 			; TAL VEZ?			
+	shl r14, 3											; r14 = cuanto avanza si llega al limite
+	
+	;CALCULO PIXELES QUE TENGO QUE MODIFICAR % 4
 	mov r10, 0x0000000000000003
 	and r10, rsi
-	;sub r10, 1 		; TAL VEZ?
 	shl r10, 2
-	add r14, r10 										; r14 = cuanto avanza si llega al limite
-
+	mov rbp, r10 										; rbp = resto
+									
+	
 	shr rsi, 2		
 
 
 
 	;CALCULO EN QUE PIXEL EMPIEZO
 
-	mov rbp, cols
+	mov r11, cols
 	mov rax, radius
-	mul rbp							; revisar multiplicaciones
+	mul r11							; revisar multiplicaciones
 	shl rax, 2
-	mov rbp, radius
-	shl rbp, 2
-	add rax, rbp
+	mov r11, radius
+	shl r11, 2
+	add rax, r11
 	add src, rax
 	add dst, rax
 
 	;CALCULO COMO PARARME EN EL PRIMER VECINO
 
-	mov rbp, radius
-	shl rbp, 2
+	mov r11, radius
+	shl r11, 2
 	mov r10, cols
 	shl r10, 2
 	mov rax, radius
 	mul r10
 	mov r10, rax
-	add r10, rbp 
+	add r10, r11
+	
 
 	
-	; r -i asm blur ../img/lena32.bmp 5 15
-	; b blur_asm.asm:151
+
 
 
 	; rdi = matriz combolucion
@@ -116,14 +117,15 @@ blur_asm:
 	; r8 = filas sin las afectadas por el radio
 
 
+
 	
 	push rdi
 	.cicloFils:
-
+		mov r11, 2
 		xor rdx, rdx
 
 		.cicloCols:
-			movdqu xmm0, [src]
+			
 			mov r9, src
 			sub r9, r10 								; r9 = posicion primer vecino
 			
@@ -135,7 +137,8 @@ blur_asm:
 			xor rax, rax
 			mov rax, radius
 			shl rax, 1
-			add rcx, 1 		;TAL VEZ?
+			add rcx, 1 		
+
 
 			pop rdi
 			push rdi
@@ -143,13 +146,13 @@ blur_asm:
 				xor rcx, rcx
 				mov rcx, radius
 				shl rcx, 1
-				add rcx, 1 		;TAL VEZ?
+				add rcx, 1 		
 				.vecCols:
 					movdqu xmm1, [r9] 						; xmm1 = vecinos
 					add r9, 4
 					movdqu xmm2, [rdi] 						; xmm2 = matriz
 					add rdi, 4
-					pshufd xmm2, xmm2, 0 					; esta bien??
+					pshufd xmm2, xmm2, 0 					
 
 					pxor xmm7, xmm7 
 					movdqu xmm3, xmm1
@@ -176,8 +179,8 @@ blur_asm:
 					mulps xmm5, xmm2
 
 					addps xmm15, xmm1
-					addps xmm14, xmm3
-					addps xmm13, xmm4
+					addps xmm14, xmm4
+					addps xmm13, xmm3
 					addps xmm12, xmm5
 
 					loop .vecCols
@@ -190,11 +193,12 @@ blur_asm:
 				sub r9, radius
 				sub r9, radius
 				sub r9, radius
-				sub r9, 1 				; TAL VEZ?
-				add r9, r15
-				add r9, r15
-				add r9, r15
-				add r9, r15
+				sub r9, 4 				
+				add r9, cols
+				add r9, cols
+				add r9, cols
+				add r9, cols
+
 
 				sub rax, 1
 				cmp rax, 0
@@ -208,10 +212,12 @@ blur_asm:
 			cvtps2dq xmm12, xmm12
 
 			packssdw xmm15, xmm14
-			packssdw xmm13, xmm12 			; consultar (con signo)
-			packuswb xmm15, xmm13 			; creo que esta todo al reves
+			packssdw xmm13, xmm12 			
+			packuswb xmm15, xmm13 			
 
-			; falta mascara para transparencia
+			movdqu xmm11, [algo]
+			por xmm15, xmm11
+
 
 			movdqu [dst], xmm15
 			
@@ -221,7 +227,20 @@ blur_asm:
 			add rdx, 1
 			cmp rdx, rsi
 			jne .cicloCols
+			
+			
 
+			sub r11,1 			; por si faltan agarrar pixeles
+			cmp r11, 0
+			je .seguir
+			add src, rbp
+			add dst, rbp
+			sub src, 16
+			sub dst, 16
+			sub rdx, 1
+			jmp .cicloCols
+
+		.seguir:
 		add src,r14
 		add dst,r14
 
