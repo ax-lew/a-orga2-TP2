@@ -2,6 +2,7 @@ default rel
 global _blur_asm
 global blur_asm
 extern matrizcmb
+extern free
 
 	%define filas 				r14
 	%define cols 				r15
@@ -249,6 +250,11 @@ blur_asm:
 		jne .cicloFils				
 	
 	pop rdi
+
+	sub rsp, 8
+	call free 				; libero la matriz
+	add rsp, 8
+
 	pop rbx
 	pop r15
 	pop r14
