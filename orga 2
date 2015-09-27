@@ -1,0 +1,68 @@
+
+
+\subsection{Introducción}
+
+En este trabajo practico implementaremos dos filtros, blur y diff, ambos en dos lenguajes diferentes, assembler y c. Vamos a explicar y comprar las 4 implementaciones para ver cual es mas rapida, tanto en tiempo de ejecucion como cuanto tardan en escribirse. //
+Tambien planteamos hipotesis y realizaremos experimentos para corroborarlas o no, para , de esta forma, lograr un mayor comprendimiento sobre el comportamiento de los filtros y las implemntaciones //
+
+\subsection{Desarrollo:}
+
+\subsection{Diff c:}
+
+Esta implementacion del diff, es bastante sensilla y se puede codear en relativamente poco tiempo (comparandola con la de assembler). Basicamente comienza transformando el vector en un matriz para trabajar con mas comodidad
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hipotesis:
+
+
+El compilador icc es mas rápido que el compilador gcc: Probaremos compilar el mismo código de c con ambos compiladores y mediremos tiempos, el uso de la cache, para ver cual de los dos es mas eficiente, probando con imágenes de distinto tamaño e imágenes no cuadradas.
+
+Resultados:
+
+A continucacion procederemos a ejecutar el codigo en c con dos compiladores diferentes, icc, desarrollado por intel y gcc. Itel dice que su compilador es mas rapido asi que veremos si los resultados lo acompañan.
+
+Imagenes chicas:
+
+Imagenes grandes:
+
+Para imágenes suficientemente grandes, donde la cache no es suficiente, los filtros en asm con simd son muuucho mas rápido que los hechos en c: Analizaremos a partir de que tamaño de imagen la cache no es suficiente. Luego veremos como se comportan los filtros
+
+Resultados: 
+
+Ahora usaramos imagenes muy pesadas y de mucha resolucion,para que no entren en la cache y esta deje de ser un factor importante en el rendimiento, asi veremos si los filtros implementados en asembler con simd son mucho mas rapido que los de c incluso cuando la cache no ayuda.
+
