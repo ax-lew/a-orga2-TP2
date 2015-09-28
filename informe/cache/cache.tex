@@ -1,18 +1,4 @@
-\subsection{Hipotesis 1:}
-
-
-El compilador icc es mas rápido que el compilador gcc: Probaremos compilar el mismo código de c con ambos compiladores y mediremos tiempos, el uso de la cache, para ver cual de los dos es mas eficiente, probando con imágenes de distinto tamaño e imágenes no cuadradas.
-
-Resultados:
-
-A continucacion procederemos a ejecutar el codigo en c con dos compiladores diferentes, icc, desarrollado por intel y gcc. Itel dice que su compilador es mas rapido asi que veremos si los resultados lo acompañan.
-
-Imagenes chicas:
-
-Imagenes grandes:
-
-
-\subsection{Hipotesis: Assembler maneja mejor la cache}
+\subsection{Resumen}
 
 Para imágenes suficientemente grandes, donde la cache no es suficiente, los filtros en asm con simd son muuucho mas rápido que los hechos en c: Analizaremos a partir de que tamaño de imagen la cache no es suficiente. Luego veremos como se comportan los filtros
 
