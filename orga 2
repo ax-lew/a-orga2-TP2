@@ -73,7 +73,7 @@ Si bien devuelta es mas eficiente que su implemntacion en c por realizar mas tra
 
 
 
-Hipótesis:
+\subsection{Hipotesis 1:}
 
 
 El compilador icc es mas rápido que el compilador gcc: Probaremos compilar el mismo código de c con ambos compiladores y mediremos tiempos, el uso de la cache, para ver cual de los dos es mas eficiente, probando con imágenes de distinto tamaño e imágenes no cuadradas.
@@ -86,9 +86,15 @@ Imagenes chicas:
 
 Imagenes grandes:
 
+
+\subsection{Hipotesis 2:}
+
 Para imágenes suficientemente grandes, donde la cache no es suficiente, los filtros en asm con simd son muuucho mas rápido que los hechos en c: Analizaremos a partir de que tamaño de imagen la cache no es suficiente. Luego veremos como se comportan los filtros
 
 Resultados: 
 
-Ahora usaramos imagenes muy pesadas y de mucha resolucion,para que no entren en la cache y esta deje de ser un factor importante en el rendimiento, asi veremos si los filtros implementados en asembler con simd son mucho mas rapido que los de c incluso cuando la cache no ayuda.
-
+Ahora usaramos imagenes muy pesadas y de mucha resolucion, el objetivo es que dichas imagenes no entren en la cache. En este caso haremos tests en una computadora que tiene una cache de 6mb, por lo que usaremos imagenes que tienen un peso superior al de ese valor. \\
+Con esto esperamos corroborar que los filtros implementados en asembler con simd tienen mas hit que los de c en situaciones con la cache llena y por ende son mucho mas rapidos con imagenes grandes. \\
+Queremos ver asi, si implementar codigo directamente en assembler resulta en un mejor uso de la cache, y entonces concluir que esto es una de las razones de lo rapido que son los filtros en assembler con respecto a los de c.\\
+A medida que relizamos los experimentos iremos incrementado el tamaño de la imagen para ver si la relacion Miss/Hit de ambos filtros va variando o no. Con cada tamaño de imagen ademas variaremos los parametros del filtro. \\
+Los siguientes experimentos los realizamos sobre el filtro blur, ya que como este es mas complicado y tiene mas ciclos conideramos que le exige mas al predictor de saltos, ademas al no ser lineal el contenido de la cache cambiara con mas frecuencia, y asi las diferencias en el uso de cache, si es que las hay, seran mas pronunciadas. Este filtro ademas recibe parametros, si bien cambiar sigma no altera el uso de la cache (pues solo afecta cuentas), cambiar el radio 

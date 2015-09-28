@@ -42,8 +42,8 @@ blur_asm:
 
     mov r12, rdi 									; r12 = src	
     mov r13, rsi									; r13 = dest
-    mov r14, rdx									; r14 = filas	
-    mov r15, rcx									; r15 = columnas
+    mov r15, rdx									; r14 = columnas
+    mov r14, rcx									; r15 = filas
     mov rbx, r8										; rbx = radio	
 
 
