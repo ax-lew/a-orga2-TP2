@@ -2,20 +2,32 @@
 
 \subsection{Introducción}
 
-En este trabajo practico implementaremos dos filtros, blur y diff, ambos en dos lenguajes diferentes, assembler y c. Vamos a explicar y comprar las 4 implementaciones para ver cual es mas rapida, tanto en tiempo de ejecucion como cuanto tardan en escribirse. //
-Tambien planteamos hipotesis y realizaremos experimentos para corroborarlas o no, para , de esta forma, lograr un mayor comprendimiento sobre el comportamiento de los filtros y las implemntaciones //
+En este trabajo practico implementaremos dos filtros, blur y diff, ambos en dos lenguajes diferentes, assembler y c. Vamos a explicar y comprar las 4 implementaciones para ver cual es mas rápida, tanto en tiempo de ejecución como cuanto tardan en escribirse. //
+También planteamos hipótesis y realizaremos experimentos para corroborarlas o no, para , de esta forma, lograr un mayor comprendimiento sobre el comportamiento de los filtros y las implementaciones //
 
 \subsection{Desarrollo:}
 
 \subsection{Diff c:}
 
-Esta implementacion del diff, es bastante sensilla y se puede codear en relativamente poco tiempo (comparandola con la de assembler). Basicamente comienza transformando el vector en un matriz para trabajar con mas comodidad
+Esta implementacion del diff, es bastante sencilla y se puede codear en relativamente poco tiempo (comparándola con la de assembler ). Básicamente comienza transformando el vector en un matriz para trabajar con mas comodidad. //
+Luego realiza dos ciclos, uno utiliza las filas y otro las columnas, de esta forma se accede a cada pixel de la imagen. Se crean 3 int que representan cada color de pixel y se hace la respectiva cuenta para lograr el efecto del filtro, que en pocas palabras es hacer una resta de los dos pixeles de las imágenes y poner el máximo valor en las 3 componentes del pixel. Luego de realizar esta cuenta se escriben estos valoren en la imagen que se devuelve. Si bien esta implementacion tiene la ventaja de ser sencilla, fácil de leer y fácil de codear, solo procesa un pixel por iteración, y por ende accede una vez a la memoria por pixel procesado. Por lo tanto con imágenes muy grandes este problema se cuantifica. Para arreglar este problema, simplemente se pueden procesar mas pixeles por iteracion, pero habría que crear mas variables temporales, por lo que el uso de memoria seria mayor
+ 
+\subsection{Diff asm:}
 
+Esta implementacion del filtro ya requiere mas tiempo y cuidado asi como una explicacion mas detallada de su funcionamiento. Comenzamos creando 3 mascaras, las cuales se utilizaran para conseguir todas las permutaciones de las 3 componentes del pixel. //
+Se procede crear el stack frame y pushear los registros que usaremos. Esta implementacion utiliza solo un ciclo, ya que se recorreremos la imagen como si fuera un vector. Este ciclo itera filas$$ \times $$columnas$$/$$4  ya que se procesaran 4 pixeles a la vez, (se podrían procesar mas y realizar menos iteraciones) esto ya muestra una ventaja con respecto a la implementacion en c, ya que se realizan menos accesos a memoria. //
 
+El ciclo realiza lo siguiente, primero mueve 4 pixeles de cada una de la las dos imágenes a registros dos xmmx, luego avanza los punteros en 16 para la próxima iteracion. Como hay que quedarse con el modulo de la resta, realizamos la resta de las dos formas diferentes, para eso creamos en otro registro xmmx una copia de los pixeles de la primera imagen y procedemos a hacer una resta entre el registro que contiene a la primera imagen con el registro que contiene a la segunda, guardando el resultado en el primero, y luego hacemos la misma resta pero con los operandos en el orden inverso, utilizando el registro con la copia. De esta forma al tomar el máximo entre los dos registros que contiene las restas, nos aseguramos de tener el modulo de la resta. //
 
+Ahora hay que poner el máximo de las 3 componentes, en las 3 componentes, para ello realizamos todas las permutaciones posibles de las 3 componentes y las guardamos en 3 registros xmmmx. Para ello utilizamos la instrucción pshufb con las mascaras anteriormente explicadas. //
 
+Para poner el máximo en las 3 componentes, vamos realizando un máximo entre los 3 registros con las permutaciones, de esta forma al ir aplicando máximo, la mayor componente va sobreviviendo y pisando las mas chicas, al final queda la mayor componente en los 3 lugares. //
 
+Por ultimo, ponemos en la componente de la transparencia el valor 255, aumentamos el contador y llamamos al ciclo devuelta. //
 
+Se ve a simple vista que esta implementacion es mas eficiente, pues no utiliza variables temporales y realiza más trabajo por iteracion que su implementacion en c, sin embargo requiere de mucho mas conocimiento y por ende su lectura y comprendimiento deja de ser tan sencillo. 
+
+\subsection{Blur c:}
 
 
 
