@@ -91,10 +91,26 @@ Imagenes grandes:
 
 Para imágenes suficientemente grandes, donde la cache no es suficiente, los filtros en asm con simd son muuucho mas rápido que los hechos en c: Analizaremos a partir de que tamaño de imagen la cache no es suficiente. Luego veremos como se comportan los filtros
 
-Resultados: 
+\\
+Resultados:\\
 
-Ahora usaramos imagenes muy pesadas y de mucha resolucion, el objetivo es que dichas imagenes no entren en la cache. En este caso haremos tests en una computadora que tiene una cache de 6mb, por lo que usaremos imagenes que tienen un peso superior al de ese valor. \\
-Con esto esperamos corroborar que los filtros implementados en asembler con simd tienen mas hit que los de c en situaciones con la cache llena y por ende son mucho mas rapidos con imagenes grandes. \\
-Queremos ver asi, si implementar codigo directamente en assembler resulta en un mejor uso de la cache, y entonces concluir que esto es una de las razones de lo rapido que son los filtros en assembler con respecto a los de c.\\
-A medida que relizamos los experimentos iremos incrementado el tamaño de la imagen para ver si la relacion Miss/Hit de ambos filtros va variando o no. Con cada tamaño de imagen ademas variaremos los parametros del filtro. \\
-Los siguientes experimentos los realizamos sobre el filtro blur, ya que como este es mas complicado y tiene mas ciclos conideramos que le exige mas al predictor de saltos, ademas al no ser lineal el contenido de la cache cambiara con mas frecuencia, y asi las diferencias en el uso de cache, si es que las hay, seran mas pronunciadas. Este filtro ademas recibe parametros, si bien cambiar sigma no altera el uso de la cache (pues solo afecta cuentas), cambiar el radio 
+Ahora usaramos imagenes muy pesadas y de mucha resolucion, el objetivo es que dichas imagenes no entren en la cache. En este caso haremos tests en una computadora que tiene una cache de 6mb, por lo que usaremos imagenes que tienen un peso superior al de ese valor. 
+
+\\
+Con esto esperamos corroborar que los filtros implementados en asembler con simd tienen mas hit que los de c en situaciones con la cache llena y por ende son mucho mas rapidos con imagenes grandes. Queremos ver asi, si implementar codigo directamente en assembler resulta en un mejor uso de la cache, y entonces concluir que esto es una de las razones de lo rapido que son los filtros en assembler con respecto a los de c. A medida que relizamos los experimentos iremos incrementado el tamaño de la imagen para ver si la relacion Miss/Hit de ambos filtros va variando o no. Con cada tamaño de imagen ademas variaremos los parametros del filtro. 
+
+\\
+Los siguientes experimentos los realizamos sobre el filtro blur, ya que como este es mas complicado y tiene mas ciclos conideramos que le exige mas al predictor de saltos, ademas al no ser lineal el contenido de la cache cambiara con mas frecuencia, y asi las diferencias en el uso de cache, si es que las hay, seran mas pronunciadas. Este filtro ademas recibe parametros, si bien cambiar sigma no altera el uso de la cache (pues solo afecta cuentas), cambiar el radio produciria que mientras este aumente, se utilice una parte de la imagen completamente diferente e inesperada, por eso decidimos ahcer las pruebas con este filtro. \\
+Por ultimo relizaremos cada experimento viarias veces para obtener un promedio y evitar outliers. \\
+
+ASSEMBLER 
+	RADIO 10 sd   	imiss 1561  0$\%$  dcachemiss 1,498,865   0.5$\%$ missjumps 4,654,865  4.5$\%$
+	RADIO 30 sd 	imiss 1562  0$\%$  dcachemiss 72,288,075 4,6$\%$ missjumps 12,332,489  1,6$\%$
+	RADIO 50 sd 	imiss 1565  0$\%$  dcachemiss 249,974,116 6.6$\%$ missjumps 18,554,880  0.9$\%$
+	
+C
+	RADIO 10 sd   	imiss 1555  0$\%$  dcachemiss 1,555,535   0.0$\%$ missjumps 19,441,865  4.4$\%$
+	RADIO 30 sd 	imiss 1562  0$\%$  dcachemiss 72,288,075 4,6$\%$ missjumps 18,554,880  $\%$
+	RADIO 50 sd 	imiss 1565  0$\%$  dcachemiss 249,974,116 6.6$\%$ missjumps 18,554,880  $\%$
+	
+
