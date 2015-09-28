@@ -29,6 +29,19 @@ Se ve a simple vista que esta implementacion es mas eficiente, pues no utiliza v
 
 \subsection{Blur c:}
 
+La implementacion del blur en c tampoco es muy complicada. La realizamos en dos pasos, primero creamos la matriz de combolución ya que como la misma no varia a lo largo del proceso, decidimos crearla al principio. Esta matriz es de floats, ya que sus valores van entre 0 y 1, y necesitan de bastante presicion.  Luego el segundo paso es procezar cada pixel. //
+Para esto el código consta de 4 ciclos, dos para situarnos en los pixeles, y otros dos para cuando se quiere aplicar el filtro al pixel, recorrer la matriz de combolucion. En resumen, cuando nos situamos en un pixel, creamos 3 floats que utilizaremos como acumuladores, en los cuales vamos guardando el resultado de multiplicar las 3 compoenentes de los vecinos del pixel a procesar por cada una de los elementos de la matriz. Para ello se utilizan dos ciclos. Aqui tambien se utilizan floats para no perder precisión en las cuentas.//
+Luego de obtener el resultado, es necesario transfomras los floats en numeros de 8 bits, ya que cada componente va de 0 a 255, por eso los transformamos a unsigned char, notar no nos preocupamos por la saturacion, ya que ningún acumulador puede pasarse de 255, esto se debe a los valores de la matriz son chicos (su suma da 1). //
+Por ultimo guardamos los valores en la imagen destino. Notar que la cantidad de iteraciones de esta implementacion es muy alta si el radio elegido y la resolución de la imagen son grandes, ya que por cada pixel se itera una cantidad de veces igual a aproximadamente 4 veces el radio al cuadrado. Aquí juega un papel fundamental el tamaño de la cache, ya que mientras mas grande sea, se podría usar un radio mas grande sin perder mucho rendimiento. //
+
+\subsection{Blur asm:}
+
+La implementacion de este filtro en assembler ya pasa a ser bastante complicada, ya que se requiere muchísimo cuidado al iterar, un error puede generar un acceso a memoria no valido, un corrimiento en el efecto blur, o incluso un efecto totalmente inesperado en la imagen. Ademas hay que ser cauto con el uso de registros que no sean xmmx ya se necesitan guardar varios valores y hay pocos registros. //
+Antes de comenzar a procesar calculamos varias cosas, filas a procesar, pixeles por fila a procesar, saltos para pasar a la siguiente fila (teniendo el cuenta el radio), pixeles a procesar, pixel en donde se comienza y como calcular la posición del primer vecino teniendo en cuenta el pixel en donde estoy parado. //
+Para facilitar un poco el trabajo, calculamos la matriz de combolucion en c, por eso desde assembler hacemos un llamado a esta función, la cual debe pedir memoria para guardar susodicha matriz. //
+Luego de obtener todo esto un ciclo que pasa por todos los pixeles a procesar realizara lo siguiente. Primero agarra 4 pixeles de la imagen a procesar y los guarda, luego trae los primeros 4 vecinos de los respectivos pixeles, osea, el primer vecino de cada uno y también los guarda. Por ultimo trae el primer valor de la matriz de combolucion y con un pshufd ubica en todo el registro el primer valor de la matriz de combolucion. Después extiende los vecinos, los pasamos a floats, de esta forma no perdemos precisión al ir multiplicando estos vecinos por registro que contiene el primer valor de la matriz de combolucion. Luego de multiplicar, guardamos el resultado y traemos los segundos vecinos de estos 4 pixeles junto con el segundo valor de la matriz de combolucion. Esto continua hasta haber procesado todos los vecinos. Una vez terminado este proceso, procedemos a transformar los floats en char, y guardarlos en la imagen destino. Notar que si el numero de pixeles a procesar por fila no es múltiplo de 4 podrían quedar pixeles a los que no se les aplicaría el filtro. Por eso en le ultima iteracion avanzamos este resto y luego retrocedemos 4 posiciones y volvemos a realizar una iteracion mas. Así aunque puede pasar que algunos pixeles vuelvan a ser procesados, nos aseguramos de aplicarles el filtro a todos. //
+Este ciclo aplica el filtro a todos los pixeles correspondientes de una fila, luego salta lo correspondiente a la siguiente fila y asi hasta procesar las filas que sean necesarias. Por ultimo al terminar libera la memoria utilizada por la matriz de combolucion. //
+Si bien devuelta es mas eficiente que su implemntacion en c por realizar mas trabajo en cada iteracion, el tiempo que requiere implementarlo en asembler es muchísimo mas que el que se tarda en c, ya que hay que tener mucho cuidado con las cantidad de iteraciones, ademas de que es bastante facil quedarse sin registros, y perderse en el código, por eso aunque sea mucho mas eficiente, a veces es preferible programar en c y que luego el compilador haga el pasaje a lenguaje de maquina. //
 
 
 
@@ -59,7 +72,8 @@ Se ve a simple vista que esta implementacion es mas eficiente, pues no utiliza v
 
 
 
-Hipotesis:
+
+Hipótesis:
 
 
 El compilador icc es mas rápido que el compilador gcc: Probaremos compilar el mismo código de c con ambos compiladores y mediremos tiempos, el uso de la cache, para ver cual de los dos es mas eficiente, probando con imágenes de distinto tamaño e imágenes no cuadradas.
