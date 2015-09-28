@@ -1,5 +1,5 @@
 
-CFLAGS64 = -ggdb -Wall -Wextra -std=c99 -pedantic -m64
+CFLAGS64 = -ggdb -Wall -Wextra -std=icc -pedantic -m64
 #CFLAGS64 = -O3 -Wall -std=c99 -pedantic -m64
 
 
