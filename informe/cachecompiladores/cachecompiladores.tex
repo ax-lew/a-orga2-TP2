@@ -1,0 +1,27 @@
+\subsection{Resumen}
+
+El uso de la cache es el mismo sin importar el compilador: Usando programas para ver el contenido y el uso del cache (como por ejemplo valgrind) procesaremos varias imágenes, de distintos tamaños, e imágenes no cuadradas, para corroborar que sin importar el compilador, el uso de la cache es el mismo.
+
+\\
+\subsection{Resultados:}\\
+
+Veremos a continuacion si el uso de la cache por ambos compiladores es similar, para esto relizaremos varias pasadas con los filtros implementados en c a diferentes imagenes. Esperamos ver que el funcionamiento de la cache es igual en ambos. 
+
+\\
+Para corroborar esto utilizaremos el valgrind, el cual nos muestra los misses y las  prediciones de saltos fallidas, dependiendo de esos resultados podremos concluir si el uso de la cache es igual de eficiente o si varia .
+
+\subsection{Datos obtenidos:}\\
+
+Blur(5,10): \\
+
+320x480 600k \\
+ICC    data cache miss 0.0$\%$ miss jumps  4.4 $\%$  \\
+GCC   data cache miss 0.2$\%$ miss jumps   4.4$\%$  \\ 
+
+1024x600 1,8mb \\
+ICC    data cache miss 0.0$\%$ miss jumps  4.4 $\%$  \\
+GCC   data cache miss 0.2$\%$ miss jumps   1.2$\%$  \\ 
+
+1280x720 2,8mb \\
+ICC    data cache miss 0.0$\%$ miss jumps  4.4 $\%$  \\
+GCC   data cache miss 0.2$\%$ miss jumps   1.2$\%$  \\ 
