@@ -1,0 +1,72 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc} % para poder usar tildes en archivos UTF-8
+\usepackage[spanish]{babel} % para que comandos como \today den el resultado en castellano
+\usepackage{a4wide} % márgenes un poco más anchos que lo usual
+\usepackage[conEntregas]{Sty/caratula}
+\usepackage{Sty/mathtools}
+\usepackage{Sty/float}
+\usepackage[pdftex]{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+%\usepackage{Sty/algorithm2e}
+\usepackage[ruled,vlined]{Sty/algorithm2e}
+%Esto de abajo es para encabezado y pie de pagina
+\usepackage{Sty/lastpage}
+\usepackage{fancyhdr}
+\usepackage{amsfonts}
+\usepackage[noend]{algpseudocode}
+\usepackage{enumerate} % AGREGO PARA PODER ENUMERAR LAS LINEAS DEL ALGORITMO
+\usepackage{wrapfig}
+
+
+\pagestyle{fancy}
+%\fancyhf{} % clear all header and footer fields
+%\fancyfoot[R]{\footnotesize Página \thepage\ de \lastpage\}
+
+\cfoot{\thepage /\pageref{LastPage} }
+
+
+\begin{document}
+
+
+
+\fecha{\today}
+
+\materia{Organizacion del computador II}
+\titulo{Trabajo Práctico II}
+%\grupo{Grupo Numero}
+
+\integrante{Gonzalez Benitez, Alberto Juan}{324/14}{gonzalezjuan.ab@gmail.com}
+\integrante{Lew, Axel Ariel }{225/14}{axel.lew@hotmail.com}
+\integrante{Noli Villar, Juan Ignacio}{174/14}{juaninv@outlook.com}
+
+\maketitle
+
+\newpage
+\tableofcontents		%compilar varias veces si no se actualiza el indice o el pie de pagina
+
+\newpage
+\section{Introducción}
+\input{desarrollo}
+
+
+\section{Hipotesis: Asm maneja mejor la cache}
+\input{cache/cache}
+
+
+%\section{Problema 1: \textbf{Saliendo del Freezer}}
+%\input{parte1}
+
+%\newpage
+%\section{Problema 2: \textbf{Algo Rush}}
+%\input{parte2}
+
+%\newpage
+%\section{Problema 3: \textbf{Perdidos en los pasillos}}
+%\input{parte3}
+
+%\newpage
+%\section{Conclusión}
+%\input{conclusion}
+
+\end{document}
