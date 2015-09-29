@@ -1,21 +1,21 @@
 \subsection{Resumen}
 
-Para imágenes suficientemente grandes, donde la cache no es suficiente, los filtros en asm con simd son muuucho mas rápido que los hechos en c
+Para imágenes suficientemente grandes, donde la cache no es suficiente, los filtros en asm con simd son muuucho mas rápido que los hechos en C
 
 \subsection{Experimentaciones:}
 
-Nuestra hipotesis se basa en que asembler consigue un mejor uso de la cache, y le atribuimos a eso su velocidad con respecto a c, para comprobar eso observaremos los miss/hit de las diferentes implementaciones de los filtros. Usaramos imagenes chicas que no tengan problema en entrar en la cache y muy pesadas , el objetivo de esto es ver si cuando la imagen es mas grande que la cache, los miss/hit de la misma cambian mucho o no en comparacion a los de las imagenes chicas, asi como tambien ver estas difetencias entre assemble y c. En este caso haremos tests en una computadora que tiene una cache de 6mb, por lo que usaremos imagenes que tienen un peso superior al de ese valor. \\
+Nuestra hipotesis se basa en que asembler consigue un mejor uso de la cache, y le atribuimos a eso su velocidad con respecto a C, para comprobar eso observaremos los miss/hit de las diferentes implementaciones de los filtros. Usaramos imagenes chicas que no tengan problema en entrar en la cache y muy pesadas. El objetivo de esto es ver si cuando la imagen es mas grande que la cache, los miss/hit de la misma cambian mucho o no en comparacion a los de las imagenes chicas, asi como tambien ver estas diferencias entre assembler y C. En este caso haremos tests en una computadora que tiene una cache de 6mb, por lo que usaremos imagenes que tienen un peso superior al de ese valor. \\
 
 
-Con esto esperamos corroborar que los filtros implementados en asembler con simd tienen mas hit que los de c en situaciones que incluyen tanto a procesar una imagen mas grande que la cache como con una mas chica, y por ende son mucho mas rapidos que los de c. Queremos ver asi, si implementar codigo directamente en Asm resulta en un mejor uso de la cache, y entonces concluir que esto es una de las razones de lo rapido que son los filtros en Asm con respecto a los de c. A medida que relizamos los experimentos iremos incrementado el tamaño de la imagen para ver si la relacion Miss/Hit de ambos filtros va variando o no. Con cada tamaño de imagen además variaremos los parametros del filtro. \\
+Con esto esperamos corroborar que los filtros implementados en assembler con simd tienen mas hit que los de C en situaciones que incluyen tanto a procesar una imagen mas grande que la cache como con una mas chica, y por ende son mucho mas rapidos que los de C. Queremos ver asi, si implementar codigo directamente en asm resulta en un mejor uso de la cache, y entonces concluir que esto es una de las razones de lo rapido que son los filtros en asm con respecto a los de C. A medida que relizamos los experimentos iremos incrementado el tamaño de la imagen para ver si la relacion Miss/Hit de ambos filtros va variando o no. Con cada tamaño de imagen además variaremos los parametros del filtro. \\
 
 
-Los siguientes experimentos los realizamos sobre el filtro blur, ya que como este es mas complicado, tiene mas ciclos y accede a posiciones de la imagen mas inesperadas las del filtro blur, consideramos que le exige mas al predictor de saltos, y al no ser lineal el contenido de la cache cambiara con mas frecuencia. De esta manera las diferencias en el uso de cache, si es que las hay, seran más pronunciadas. Este filtro ademas recibe parametros, si bien cambiar sigma no altera el uso de la cache (pues solo afecta cuentas), cambiar el radio produciria que mientras este aumente, se utilice una parte de la imagen mas grande y completamente diferente e inesperada, por eso decidimos hacer las pruebas con este filtro. \\
+Los siguientes experimentos los realizamos sobre el filtro blur, ya que como este es mas complicado, tiene mas ciclos y accede a posiciones de la imagen mas inesperadas que las del filtro diff, consideramos que le exige mas al predictor de saltos, y al no ser lineal el contenido de la cache cambiara con mas frecuencia. De esta manera las diferencias en el uso de cache, si es que las hay, seran más pronunciadas. Este filtro ademas recibe parametros, si bien cambiar sigma no altera el uso de la cache (pues solo afecta cuentas), cambiar el radio produciria que mientras este aumente, se utilice una parte de la imagen mas grande y completamente diferente e inesperada, por eso decidimos hacer las pruebas con este filtro. \\
 
 
-Para ver los el uso de la cache utilizaremos el programa valgrind y relizaremos cada experimento viarias veces para obtener un promedio sacando outliers. Fijamos como 30 el radio maximo ya que si lo incrementamos mas, el  valgrind demora demasiado en emular el comportamiento de la cache (mas de media hoa). A continuacion mostraremos algunos resultados obtenidos con las diferentes imagenes, mostrando su peso y porcentaje de miss. \\
+Para ver los el uso de la cache utilizaremos el programa valgrind y realizaremos cada experimento varias veces para obtener un promedio sacando outliers. Fijamos como 30 el radio maximo ya que si lo incrementamos mas, el valgrind demora demasiado en emular el comportamiento de la cache (mas de media hoa). A continuacion mostraremos algunos resultados obtenidos con las diferentes imagenes, mostrando su peso y porcentaje de miss. \\
 
-\subsection{Datos obtenidos:}
+\subsection{Datos obtenidos}
 
 \begin{figure}[H]
 \begin{center}
@@ -25,7 +25,7 @@ Para ver los el uso de la cache utilizaremos el programa valgrind y relizaremos 
 \end{center}
 \end{figure}
 
-\subsection{Gkuráficos:} 
+\subsection{Gkuráficos} 
 
 
 \begin{figure}[H]
@@ -52,8 +52,7 @@ Para ver los el uso de la cache utilizaremos el programa valgrind y relizaremos 
 \end{center}
 \end{figure}
 
-\subsection{Conclusion:} 
+\subsection{Conclusion} 
 
-A partir de los gráficos y de los datos obtenidos se puede ver claramente un mejor uso de la cache por parte de los filtros en c , esto va en contra de nuestra hipotesis. Sin embargo conlcuimos que esto pasa porque el compilador hace un muy buen trabajo a la hora de pasar el código en c a lenguaje de máquina y que lo hace de una manera que aprovecha al máximo el uso la cache. Esta conclusión sale de que al ver el porcentaje de miss de los filtros en c a medida que aumentamos el radio y el tamaño de la imagen es siempre muy similar. Por lo tanto el tamaño de imagen y el radio no afectan el radio miss/hit de la cache en el filtro implementado en  C. Esto no pasa con nuestros filtros en asm, en los cuales si se puden ver variaciones mas notables en el porcentaje de miss. De esto conlcuimos que el problema de los miss en asm es la forma en que programamos el filtro. \\
-Por otro lado notamos que si bien el porcentaje de miss jumps de ambas implementaciones es muy similar, la cantidad de saltos que realiza c es muchisimo mas alta que la de asm. No inclumos estos numeros en el infome porque con un radio de 20 valgrind no terminaba de procezar la imagen, sin embargo al parar la emulacion de la cache en diferentes momentos , el porcentaje de miss era siempre el mismo, tanto en asm como en c. Con radios mas chicos la emulacion si terminaba y si se podia observar una cantidad de saltos hasta 5 veces mayor en la implementacion de c. Esto se puede atribuir a que asm utiliza simd y procesa 4 pixeles por iteracion y por ende realiza menos viajes a la memoria, y por eso es mas rápido.
-
+A partir de los gráficos y de los datos obtenidos se puede ver claramente un mejor uso de la cache por parte de los filtros en C, esto va en contra de nuestra hipotesis. Sin embargo conlcuimos que esto pasa porque el compilador hace un muy buen trabajo a la hora de pasar el Código en C a lenguaje de máquina y que lo hace de una manera que aprovecha al máximo el uso la cache. Esta conclusión sale de que al ver el porcentaje de miss de los filtros en C a medida que aumentamos el radio y el tamaño de la imagen es siempre muy similar. Por lo tanto el tamaño de imagen y el radio no afectan el radio miss/hit de la cache en el filtro implementado en  C. Esto no pasa con nuestros filtros en asm, en los cuales si se puden ver variaciones mas notables en el porcentaje de miss. De esto conlcuimos que el problema de los miss en asm es la forma en que programamos el filtro. \\
+Por otro lado notamos que si bien el porcentaje de miss jumps de ambas implementaciones es muy similar, la cantidad de saltos que realiza C es muchisimo mas alta que la de asm. No inclumos estos numeros en el infome porque con un radio de 20 valgrind no terminaba de procesar la imagen, sin embargo al parar la emulacion de la cache en diferentes momentos, el porcentaje de miss era siempre el mismo, tanto en asm como en C. Con radios mas chicos la emulacion si terminaba y si se podia observar una cantidad de saltos hasta 5 veces mayor en la implementacion de C. Esto se puede atribuir a que asm utiliza simd y procesa 4 pixeles por iteracion y por ende realiza menos viajes a la memoria, y por eso es mas rápido.
