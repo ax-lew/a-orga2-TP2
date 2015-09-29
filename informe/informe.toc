@@ -7,8 +7,13 @@
 \contentsline {subsection}{\numberline {1.5}Blur en c}{4}
 \contentsline {subsection}{\numberline {1.6}Blur en asm}{5}
 \contentsline {section}{\numberline {2}Hipotesis: Asm maneja mejor la cache}{6}
-\contentsline {subsection}{\numberline {2.1}Hipotesis 1:}{6}
-\contentsline {subsection}{\numberline {2.2}Hipotesis: Assembler maneja mejor la cache}{6}
-\contentsline {subsection}{\numberline {2.3}Resultados:}{6}
-\contentsline {subsection}{\numberline {2.4}Graficos:}{8}
-\contentsline {subsection}{\numberline {2.5}Conclusion:}{9}
+\contentsline {subsection}{\numberline {2.1}Resumen}{6}
+\contentsline {subsection}{\numberline {2.2}Resultados:}{6}
+\contentsline {subsection}{\numberline {2.3}Graficos:}{8}
+\contentsline {subsection}{\numberline {2.4}Conclusion:}{9}
+\contentsline {section}{\numberline {3}Hipotesis: El uso de la cache de ICC es diferente al de GCC}{9}
+\contentsline {subsection}{\numberline {3.1}Resumen}{9}
+\contentsline {subsection}{\numberline {3.2}Resultados:}{9}
+\contentsline {subsection}{\numberline {3.3}Datos obtenidos:}{10}
+\contentsline {subsection}{\numberline {3.4}Graficos:}{10}
+\contentsline {subsection}{\numberline {3.5}Conclusion:}{10}

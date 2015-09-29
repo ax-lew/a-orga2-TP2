@@ -3,7 +3,7 @@
 Para imágenes suficientemente grandes, donde la cache no es suficiente, los filtros en asm con simd son muuucho mas rápido que los hechos en c: Analizaremos a partir de que tamaño de imagen la cache no es suficiente. Luego veremos como se comportan los filtros
 
 \\
-\subsection{Resultados:}\\
+\subsection{Experimentaciones:}\\
 
 Nuestra hipotesis se basa en que asembler consigue un mejor uso de la cache, y le atribuimos a eso su velocidad, para comprobar eso observaremos los miss/hit de los diferentes filtros. Usaramos imagenes chicas y muy pesadas , el objetivo es ver si cuando la imagen es mas grande que la cache, los miss/hit de la misma cambian mucho o no en comparacion a los de las imagenes chicas. En este caso haremos tests en una computadora que tiene una cache de 6mb, por lo que usaremos imagenes que tienen un peso superior al de ese valor. 
 
@@ -15,6 +15,8 @@ Los siguientes experimentos los realizamos sobre el filtro blur, ya que como est
 
 \\
 Para ver los el uso de la cache utilizaremos el programa valgrind y relizaremos cada experimento viarias veces para obtener un promedio sacando outliers. Fijamos como 30 el radio maximo ya que si lo incrementabamos mas, porque el  valgrind demoraba demasiado en emular el comportamiento de la cache. A continuacion mostraremos algunos resultados obtenidos con las diferentes imagenes, mostrando su peso y porcentaje de miss. \\
+
+\subsection{Datos obtenidos:}\\
 
 2560x1080 8,3mb \\
 
