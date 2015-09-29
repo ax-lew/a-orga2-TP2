@@ -13,11 +13,11 @@ El diff, o diferencia de imagenes, toma como parametro dos imagenes y generara u
 
 \minipage{0.5\textwidth}
   \includegraphics[width=\linewidth]{img/scene0(1).png}
-  \caption{{\small Imagen 1}} \label{a}
+  \caption{{\small Imagen 1}} 
 \endminipage
 \minipage{0.5\textwidth}
   \includegraphics[width=\linewidth]{img/scene400.png}
-  \caption{{\small Imagen 2}} \label{b}
+  \caption{{\small Imagen 2}} 
 \endminipage
 
 \end{center}
@@ -28,7 +28,7 @@ El diff, o diferencia de imagenes, toma como parametro dos imagenes y generara u
 
 \minipage{0.6\textwidth}
   \includegraphics[width=\linewidth]{img/scene0.png}
-  \caption{{\small Resultado}} \label{c}
+  \caption{{\small Resultado}} 
 \endminipage
 
 \end{center}
@@ -41,12 +41,12 @@ El blur (gaussiano) consiste en un suavizado de la imagen, para darle un aspecto
 
 \minipage{0.6\textwidth}
   \includegraphics[width=\linewidth]{img/sd(1).png}
-  \caption{{\small Imagen entrada}} \label{c}
+  \caption{{\small Imagen entrada}} 
 \endminipage
 
 \minipage{0.6\textwidth}
   \includegraphics[width=\linewidth]{img/sd.png}
-  \caption{{\small Imagen salida, con radio 15 y sigma 5}} \label{c}
+  \caption{{\small Imagen salida, con radio 15 y sigma 5}}
 \endminipage
 
 \end{center}
@@ -60,7 +60,7 @@ También planteamos un conjunto de hipótesis. Estas estan hechas con el objetiv
 \subsection{Diff en c}
 
 Esta implementacion del diff, es bastante sencilla y se puede codear en relativamente poco tiempo (comparándola con la de assembler ). Básicamente comienza transformando el vector en un matriz para trabajar con mas comodidad. \\
-Luego realiza dos ciclos, uno utiliza las filas y otro las columnas, de esta forma se accede a cada pixel de la imagen. Se crean 3 int que representan cada color de pixel y se hace la respectiva cuenta para lograr el efecto del filtro, que en pocas palabras es hacer una resta de los dos pixeles de las imágenes y poner el máximo valor en las 3 componentes del pixel. Luego de realizar esta cuenta se escriben estos valoren en la imagen que se devuelve. Si bien esta implementacion tiene la ventaja de ser sencilla, fácil de leer y fácil de codear, solo procesa un pixel por iteración, y por ende accede una vez a la memoria por pixel procesado. Por lo tanto con imágenes muy grandes este problema se cuantifica. Para arreglar este problema, simplemente se pueden procesar mas pixeles por iteracion, pero habría que crear mas variables temporales, por lo que el uso de memoria seria mayor
+Luego realiza dos ciclos, uno para iterar sobre las filas y otro sobre las columnas, y de esta forma se accede a cada pixel de la imagen. Se crean 3 int que representan cada color del pixel y se hace la respectiva cuenta para lograr el efecto del filtro, que en pocas palabras es hacer una resta de los dos pixeles de las imágenes y poner el máximo valor en las 3 componentes del pixel. Luego de realizar esta cuenta se escriben estos valoren en la imagen que se devuelve (agregando ademas, la transparencia, con valor 255). Si bien esta implementacion tiene la ventaja de ser sencilla, fácil de leer y fácil de codear, solo procesa un pixel por iteración, y accede tres vez a la memoria por pixel procesado. Por lo tanto con imágenes muy grandes este problema se cuantifica. Para arreglar este problema, simplemente se pueden procesar mas pixeles por iteracion, pero habría que crear mas variables temporales, por lo que el uso de memoria seria mayor y 
  
 \subsection{Diff en asm}
 

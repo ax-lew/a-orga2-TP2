@@ -8,12 +8,17 @@
 \contentsline {subsection}{\numberline {1.6}Blur en asm}{5}
 \contentsline {section}{\numberline {2}Hipotesis: Asm maneja mejor la cache}{6}
 \contentsline {subsection}{\numberline {2.1}Resumen}{6}
-\contentsline {subsection}{\numberline {2.2}Resultados:}{6}
-\contentsline {subsection}{\numberline {2.3}Graficos:}{8}
-\contentsline {subsection}{\numberline {2.4}Conclusion:}{9}
-\contentsline {section}{\numberline {3}Hipotesis: El uso de la cache de ICC es diferente al de GCC}{9}
+\contentsline {subsection}{\numberline {2.2}Experimentaciones:}{6}
+\contentsline {subsection}{\numberline {2.3}Datos obtenidos:}{6}
+\contentsline {subsection}{\numberline {2.4}Graficos:}{8}
+\contentsline {subsection}{\numberline {2.5}Conclusion:}{9}
+\contentsline {section}{\numberline {3}Hipotesis: El compilador ICC es mas veloz que el GCC}{9}
 \contentsline {subsection}{\numberline {3.1}Resumen}{9}
-\contentsline {subsection}{\numberline {3.2}Resultados:}{9}
-\contentsline {subsection}{\numberline {3.3}Datos obtenidos:}{10}
-\contentsline {subsection}{\numberline {3.4}Graficos:}{10}
-\contentsline {subsection}{\numberline {3.5}Conclusion:}{10}
+\contentsline {subsection}{\numberline {3.2}Experimentacion}{9}
+\contentsline {subsection}{\numberline {3.3}Resultados}{10}
+\contentsline {subsection}{\numberline {3.4}Conclusion}{12}
+\contentsline {section}{\numberline {4}Hipotesis: El uso de la cache de ICC es diferente al de GCC}{12}
+\contentsline {subsection}{\numberline {4.1}Resumen}{12}
+\contentsline {subsection}{\numberline {4.2}Experimentaciones:}{12}
+\contentsline {subsection}{\numberline {4.3}Datos obtenidos:}{12}
+\contentsline {subsection}{\numberline {4.4}Conclusion:}{13}
