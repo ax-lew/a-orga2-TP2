@@ -1,8 +1,8 @@
-\subsection{Diff asm:(Sin usar SIMD)}
-Esta implementación del filtro la vamos a utilizar para corroborar una de nuevas hipótesis planteadas. \\
-Para esta implementación rehalizada en assembler el funcionamiento es completamente diferente al usado con SIMD. Además de diferente lo positivo de esta implementación es su simplicidad. \\
-Lo malo de esta implementación es la cantidad de iteraciones a rehalizar y la cantidad de accesos a memoria por iteración.
- El pseuocódigo es el siguiente:\\
+\subsection{Resumen:}
+Esta implementación del filtro la vamos a utilizar para corroborar una de nuestras hipótesis planteadas. \\
+El funcionamiento de esta implementación realizada en assembler es completamente diferente a la usada en SIMD. Además de diferente lo positivo de esta implementación es su simplicidad. \\
+Lo malo de esta implementación es la cantidad de iteraciones a realizar y la cantidad de accesos a memoria por iteración.
+El pseuocódigo es el siguiente:\\
 //Tengo 6 registros temporales supongamos que se enumeran de R1...R6 todos de 1Byte\\
 // El puntero a la imagen 1 lo voy a llamar Img1, el de la imagen dos Img2 y el puntero a la imagen de destino lo voy a llamar Dest\\
 //Ademas de todos estos tengo un registro contador (Cont) que tiene como valor: Cont = ancho*alto que representa las iteraciones a rehalizar\\
@@ -42,25 +42,44 @@ while(Cont != 0{  		//Itero tantas veces como píxeles tenga\\
 \subsection{Assembler con SIMD es más rápido que la Assemler sin SIMD:}
 
 ¿Es esta hipótesis verdadera?. La respuesta es sí. Pero... ¿por qué?. \\
-Primero voy a rehalizar varios casos de prueba entre ambas implementaciones y ver como se comportan. Lo esperado al rehalizar esta comparación es una notable diferencia a favor del filtro rehalizado usando SIMD.\\
+Primero voy a hacer varios casos de prueba entre ambas implementaciones para analizar su comportamiento. Lo esperado a observar en esta comparación es una notable diferencia a favor del filtro realizado usando SIMD.\\
 ¿Y como medimos esta diferencia?\\
  La métrica decidida para esta y para otras comparaciónes es la métrica dada por los Ticks del reloj.\\
- Para eso voy a rehalizar varios casos de prueba y voy a comparar la cantidad de ciclos de clock utilizados . El resultado Esperado en esa comparación es una clara ventaja a favor de la implementación con SIMD.
- %------------------------------------GRAFICO CON VARIAS IMAGENES MOSTRANDO QUE SIMD ES MAS RAPIDO \\
+ Para eso voy a realizar varios casos de prueba y voy a comparar la cantidad de ciclos de clock utilizados .\\
 
- Como esperabamos el uso del modelo SIMD es muy superior ya que tiene menor cantidad de iteraciones, menor acceso a memoria por iteración y mayor capacidad de pocesamiento. No hay necesidad de examinarlo mas a fondo ya que hoy en día casi se puede rehalizar una demostración formal sobre la ventaja de SIMD.\\
-\subsection{C es más rápido que la Assemler sin SIMD:}
+ \subsection{Gráficos SIMD vs sin SIMD}
+
+
+
+ \begin{figure}[H]
+\begin{center}
+%\minipage{0.8\textwidth}
+  \includegraphics[width=\linewidth]{diffsinsimd/simd.sinSIMD.png}
+  %\endminipage
+\end{center}
+\end{figure}
+
+ Como esperabamos, el uso del modelo SIMD es muy superior ya que tiene menor cantidad de iteraciones, menor acceso a memoria por iteración y mayor capacidad de pocesamiento. No hay necesidad de examinarlo mas a fondo ya que hoy en día casi se puede realizar una demostración formal sobre la ventaja de SIMD sobre asm sin usar SIMD\\
+\subsection{La implementación en C es más rápida que la implementación en Assemler sin SIMD:}
  A continuación vamos a comparar el rendimiento entre ĺa implementación del filtro en c y su implementación en assembler sin el uso de SIMD.\\
- Nuestra hipótesis consiste en que la implementación en C es más rápida que la implementación rehalizada en Assembler.\\
- Para tratar de corroborar nuestra hipótesis vamos primeramente a comparar el tiempo en Ticks del reloj utilizados para procesar una imagen en ambas implementacioes.  Lo esperado en este caso es que el filtro en C demore menos. \\ 
+ Nuestra hipótesis consiste en que la implementación en C es más rápida que la implementación realizada en Assembler. Para tratar de corroborar esto vamos primero a comparar el tiempo en Ticks del reloj utilizados para procesar una imagen en ambas implementacioes.  Lo esperado en este caso es que el filtro en C demore menos. \\ 
  El siguiente gráfico muestra, para varias imagenes de distinto tamaño, el tiempo de proceso dado en ticks de reloj de la implementación en C comparado a la implementación en Assembler sin SIMD. \\
- %----------------------------------------GRAFICO DEL TIEMPO QUE TOMAN VARIAS IMAGENES EN PROCESARSE EN C Y EN ASM SIN SIMD
-EL gráfico anterior muestra, a diferencia de lo supuesto anteriormente, un menor tiempo de procesamiento para el filtro implementado en C.\\
+
+ \subsection{Gráficos C vs sin SIMD}
+
+ \begin{figure}[H]
+\begin{center}
+%\minipage{0.8\textwidth}
+  \includegraphics[width=\linewidth]{diffsinsimd/ASMssd.C.png}
+  %\endminipage
+\end{center}
+\end{figure}
+EL gráfico anterior muestra, a diferencia de lo supuesto anteriormente, un menor tiempo de procesamiento para el filtro implementado assembler sin SIMD.\\
 ¿Y por qué sucede esto?\\
 La diferencia consiste principalmente en que en la implementación de Assembler no hago accesos innecesarios a memoria. Es decir, en cada ciclo accedo en total nueve veces a memoria, ni mas ni menos.\\
- Uno estaría tentado a decir lo mismo de la implementación del filtro en C. Estaría tentado a decir que también accedo esa misma cantidad de veces a memoria pero a diferencia de la implementación en Assembler, accedo más veces indirectamente porque en mi función tengo variables y las variables se guardan en el Stack.\\
- En mi implementación en C de la función diff tengo varias variables y opero con ellas en todo momento ya sea para hacer una resta, para calcular un maximo entre gamas o también incluso para guardar mi resultado en la imagen de destino. Cada una de estas operaciones rehalizadas con las variables demanda un acceso a memoria, mas específicamente al stack, para poder obtener su valor y por ende, aumenta también considerablemente la cantidad de accesos a memoria en cada iteración del ciclo.\\
- Además de los accesos a memoria producto del uso de las variables también entra en juego la me memória Caché y el principio de vecindad. Mi implementación en Assembler accede en todo momento a posiciónes de momoria consecutivas, que por el principio de vecindad, es muy probable que estén en la Caché y tenga un hit rate muy elevado.  Por otro lado en mi implementación en C no siempre accedo a posiciones de moria consecutivas a causa de las variables que tengo definidas en el Stack que demandan un acceso $"fuera de la vecindad"$ dando como resultado un hit rate mas bajo, mas accesos a memoria y por ende más ciclos de Clock.\\
+ Uno estaría tentado a decir que sucede lo mismo en la implementación del filtro en C, estaría tentado a decir que también accedo esa misma cantidad de veces a memoria pero a diferencia de la implementación en Assembler, accedo más veces indirectamente porque en mi función tengo variables y las variables se guardan en el Stack.\\
+ En mi implementación en C de la función diff tengo varias variables y opero con ellas en todo momento ya sea para hacer una resta, para calcular un maximo entre gamas o también incluso para guardar mi resultado en la imagen de destino. Cada una de estas operaciones realizadas con las variables demanda un acceso a memoria, mas específicamente al stack, para poder obtener su valor dando como resultado una mayor cantidad de accesos a memoria y una mayor cantidad de Ticks del reloj en cada iteración del ciclo. Por ende concluimos que nuestra hipótesis resultó ser falsa\\
+ 
 
   
  
