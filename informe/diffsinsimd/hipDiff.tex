@@ -1,0 +1,71 @@
+\subsection{Diff asm:(Sin usar SIMD)}
+Esta implementación del filtro la vamos a utilizar para corroborar una de nuevas hipótesis planteadas. \\
+Para esta implementación rehalizada en assembler el funcionamiento es completamente diferente al usado con SIMD. Además de diferente lo positivo de esta implementación es su simplicidad. \\
+Lo malo de esta implementación es la cantidad de iteraciones a rehalizar y la cantidad de accesos a memoria por iteración.
+ El pseuocódigo es el siguiente:\\
+//Tengo 6 registros temporales supongamos que se enumeran de R1...R6 todos de 1Byte\\
+// El puntero a la imagen 1 lo voy a llamar Img1, el de la imagen dos Img2 y el puntero a la imagen de destino lo voy a llamar Dest\\
+//Ademas de todos estos tengo un registro contador (Cont) que tiene como valor: Cont = ancho*alto que representa las iteraciones a rehalizar\\
+
+while(Cont != 0{  		//Itero tantas veces como píxeles tenga\\
+	R1<-[Img1];  		//traigo la componente red de la imagen 1\\
+	R2<-[Img2]; 	 	//traigo la componente red de la imagen 2\\
+	Img1++; 	 	//Me muevo un byte en la imagen 1\\
+	Imag2++; 		//Me muevo un byte en la imagen 2\\
+	R3<-[Img1] 		//Traigo la componente Green de la imagen1\\
+	R4<-[Img2] 		//Traigo la componente Green de la imagen2\\
+	Img1++; 		//Me muevo un byte en la imagen1\\
+	Img2++;        		//Me muevo un byte en la imagen2\\
+	R5<-[Img1]; 		//Traigo la componente Blue de la imagen1\\
+	R6<-[Img2]; 		//Traigo la componente Blue de la imagen2\\
+	Img1+=2;		//Apunto al siguiente pixel salteando la componente alpha\\
+	Img2+=2; 		//Apunto al siguiente pixel salteando la componente alpha\\
+	//Ahora voy a calcular el modulo de la resta en cada uno de los componentes\\
+	R1<- mod(R1-R2)\\
+	R2<-mod(R3-R4)\\
+	R3<-mod(R5-R6)\\
+	//una vez que tengo  en R1, R2, R3 el modulo de las restas de cada uno de los componentes paso a calular el maximo entre esos 3\\
+	R1<- max(R1, R2); \\
+	R1<-max(R1, R3);\\
+	//Finalmente los muevo a la imagen de destino cuidando de poner 255 en la componente alpha\\
+	[Dest]<-R1;\\
+	Dest++;\\
+	[Dest]<-R1;\\
+	Dest++;\\
+	[Dest]<-R1;\\
+	Dest++;\\
+	[Dest]<-255; 		//muevo el 255 en byte obviamente\\
+	Dest++;\\
+	Cont--;\\
+
+}\\ \\
+\subsection{Assembler con SIMD es más rápido que la Assemler sin SIMD:}
+
+¿Es esta hipótesis verdadera?. La respuesta es sí. Pero... ¿por qué?. \\
+Primero voy a rehalizar varios casos de prueba entre ambas implementaciones y ver como se comportan. Lo esperado al rehalizar esta comparación es una notable diferencia a favor del filtro rehalizado usando SIMD.\\
+¿Y como medimos esta diferencia?\\
+ La métrica decidida para esta y para otras comparaciónes es la métrica dada por los Ticks del reloj.\\
+ Para eso voy a rehalizar varios casos de prueba y voy a comparar la cantidad de ciclos de clock utilizados . El resultado Esperado en esa comparación es una clara ventaja a favor de la implementación con SIMD.
+ %------------------------------------GRAFICO CON VARIAS IMAGENES MOSTRANDO QUE SIMD ES MAS RAPIDO \\
+
+ Como esperabamos el uso del modelo SIMD es muy superior ya que tiene menor cantidad de iteraciones, menor acceso a memoria por iteración y mayor capacidad de pocesamiento. No hay necesidad de examinarlo mas a fondo ya que hoy en día casi se puede rehalizar una demostración formal sobre la ventaja de SIMD.\\
+\subsection{C es más rápido que la Assemler sin SIMD:}
+ A continuación vamos a comparar el rendimiento entre ĺa implementación del filtro en c y su implementación en assembler sin el uso de SIMD.\\
+ Nuestra hipótesis consiste en que la implementación en C es más rápida que la implementación rehalizada en Assembler.\\
+ Para tratar de corroborar nuestra hipótesis vamos primeramente a comparar el tiempo en Ticks del reloj utilizados para procesar una imagen en ambas implementacioes.  Lo esperado en este caso es que el filtro en C demore menos. \\ 
+ El siguiente gráfico muestra, para varias imagenes de distinto tamaño, el tiempo de proceso dado en ticks de reloj de la implementación en C comparado a la implementación en Assembler sin SIMD. \\
+ %----------------------------------------GRAFICO DEL TIEMPO QUE TOMAN VARIAS IMAGENES EN PROCESARSE EN C Y EN ASM SIN SIMD
+EL gráfico anterior muestra, a diferencia de lo supuesto anteriormente, un menor tiempo de procesamiento para el filtro implementado en C.\\
+¿Y por qué sucede esto?\\
+La diferencia consiste principalmente en que en la implementación de Assembler no hago accesos innecesarios a memoria. Es decir, en cada ciclo accedo en total nueve veces a memoria, ni mas ni menos.\\
+ Uno estaría tentado a decir lo mismo de la implementación del filtro en C. Estaría tentado a decir que también accedo esa misma cantidad de veces a memoria pero a diferencia de la implementación en Assembler, accedo más veces indirectamente porque en mi función tengo variables y las variables se guardan en el Stack.\\
+ En mi implementación en C de la función diff tengo varias variables y opero con ellas en todo momento ya sea para hacer una resta, para calcular un maximo entre gamas o también incluso para guardar mi resultado en la imagen de destino. Cada una de estas operaciones rehalizadas con las variables demanda un acceso a memoria, mas específicamente al stack, para poder obtener su valor y por ende, aumenta también considerablemente la cantidad de accesos a memoria en cada iteración del ciclo.\\
+ Además de los accesos a memoria producto del uso de las variables también entra en juego la me memória Caché y el principio de vecindad. Mi implementación en Assembler accede en todo momento a posiciónes de momoria consecutivas, que por el principio de vecindad, es muy probable que estén en la Caché y tenga un hit rate muy elevado.  Por otro lado en mi implementación en C no siempre accedo a posiciones de moria consecutivas a causa de las variables que tengo definidas en el Stack que demandan un acceso $"fuera de la vecindad"$ dando como resultado un hit rate mas bajo, mas accesos a memoria y por ende más ciclos de Clock.\\
+
+  
+ 
+
+
+
+
+
