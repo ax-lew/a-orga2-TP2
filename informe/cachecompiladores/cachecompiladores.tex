@@ -3,7 +3,7 @@
 El uso de la cache es el mismo sin importar el compilador: Usando programas para ver el contenido y el uso del cache (como por ejemplo valgrind) procesaremos varias imágenes, de distintos tamaños, e imágenes no cuadradas, para corroborar que sin importar el compilador, el uso de la cache es el mismo. \\
 
 
-\subsection{Experimentaciones:}
+\subsection{Experimentaciones}
 
 Veremos a continuacion si el uso de la cache por ambos compiladores es igual, similar o completamente difetenete, para esto relizaremos varias pasadas con los filtros implementados en c a diferentes imagenes utilizando dos compiladores diferentes, ICC y GCC. Esperamos ver que el funcionamiento de la cache es igual en ambos. \\
 
@@ -21,7 +21,7 @@ Primero veremos como es el comportamiento con el filtro blur, por cuestines de c
 \end{center}
 \end{figure}
 
-\subsection{Conclusion:}
+\subsection{Conclusion}
 
 Luego de obtener los resultados y analizarlos observamos que si bien los valores de misses y miss jumps son muy parecidos , no son lo suficientemente parecidos como para concluir que el uso de la cache que hacen ambos compiladores es el mismo. Esto lo deducimos porque vimos que cuando corrimos varias veces el mismo filtro a la misma imagen utilizando siempre solo un compilador, al ver los resultados (los miss cache), estos varian entre si en muy poco (+- diez ), pero si compramos los resultados de misses obtenidos utilizando compiladores diferentes estas variaciones son suficientemente grandes como para ver que definitivamente no hacen lo mismo. \\
 

@@ -8,10 +8,10 @@
 \contentsline {subsection}{\numberline {1.6}Blur en asm}{5}
 \contentsline {section}{\numberline {2}Hipotesis: Asm maneja mejor la cache}{6}
 \contentsline {subsection}{\numberline {2.1}Resumen}{6}
-\contentsline {subsection}{\numberline {2.2}Experimentaciones:}{6}
-\contentsline {subsection}{\numberline {2.3}Datos obtenidos:}{7}
-\contentsline {subsection}{\numberline {2.4}Gkur\IeC {\'a}ficos:}{7}
-\contentsline {subsection}{\numberline {2.5}Conclusion:}{8}
+\contentsline {subsection}{\numberline {2.2}Experimentaciones}{6}
+\contentsline {subsection}{\numberline {2.3}Datos obtenidos}{7}
+\contentsline {subsection}{\numberline {2.4}Gkur\IeC {\'a}ficos}{7}
+\contentsline {subsection}{\numberline {2.5}Conclusion}{8}
 \contentsline {section}{\numberline {3}Hipotesis: El compilador ICC es mas veloz que el GCC}{9}
 \contentsline {subsection}{\numberline {3.1}Resumen}{9}
 \contentsline {subsection}{\numberline {3.2}Experimentacion}{9}
@@ -19,6 +19,14 @@
 \contentsline {subsection}{\numberline {3.4}Conclusion}{11}
 \contentsline {section}{\numberline {4}Hipotesis: El uso de la cache de ICC es diferente al de GCC}{11}
 \contentsline {subsection}{\numberline {4.1}Resumen}{11}
-\contentsline {subsection}{\numberline {4.2}Experimentaciones:}{12}
+\contentsline {subsection}{\numberline {4.2}Experimentaciones}{12}
 \contentsline {subsection}{\numberline {4.3}Datos obtenidos:}{12}
-\contentsline {subsection}{\numberline {4.4}Conclusion:}{13}
+\contentsline {subsection}{\numberline {4.4}Conclusion}{13}
+\contentsline {section}{\numberline {5}Hipotesis: asm sin simd es mejor que C}{14}
+\contentsline {subsection}{\numberline {5.1}Resumen}{14}
+\contentsline {subsection}{\numberline {5.2}Assembler con SIMD es m\IeC {\'a}s r\IeC {\'a}pido que la Assemler sin SIMD}{14}
+\contentsline {subsection}{\numberline {5.3}Gr\IeC {\'a}ficos SIMD vs sin SIMD}{15}
+\contentsline {subsection}{\numberline {5.4}La implementaci\IeC {\'o}n en C es m\IeC {\'a}s r\IeC {\'a}pida que la implementaci\IeC {\'o}n en Assemler sin SIMD}{15}
+\contentsline {subsection}{\numberline {5.5}Gr\IeC {\'a}ficos C vs sin SIMD}{16}
+\contentsline {section}{\numberline {6}Conclusi\IeC {\'o}n}{17}
+\contentsline {subsection}{\numberline {6.1}Conclusion}{17}

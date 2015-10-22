@@ -2,7 +2,7 @@
 
 Para imágenes suficientemente grandes, donde la cache no es suficiente, los filtros en asm con simd son muuucho mas rápido que los hechos en C
 
-\subsection{Experimentaciones:}
+\subsection{Experimentaciones}
 
 Nuestra hipotesis se basa en que asembler consigue un mejor uso de la cache, y le atribuimos a eso su velocidad con respecto a C, para comprobar eso observaremos los miss/hit de las diferentes implementaciones de los filtros. Usaramos imagenes chicas que no tengan problema en entrar en la cache y muy pesadas. El objetivo de esto es ver si cuando la imagen es mas grande que la cache, los miss/hit de la misma cambian mucho o no en comparacion a los de las imagenes chicas, asi como tambien ver estas diferencias entre assembler y C. En este caso haremos tests en una computadora que tiene una cache de 6mb, por lo que usaremos imagenes que tienen un peso superior al de ese valor. \\
 

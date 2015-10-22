@@ -29,9 +29,8 @@ FILTROS_OBJ_CON_PATH = $(addprefix  $(BUILD_DIR)/, $(FILTROS_OBJ))
 
 filtros: $(FILTROS_OBJ_CON_PATH)
 
-$(BUILD_DIR)/%.o: %.c
-	icc $(CFLAGS) -c -o $@ $<
-	#$(CC) $(CFLAGS) -c -o $@ $<
+$(BUILD_DIR)/%.o: %.c	
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(BUILD_DIR)/%.o: %.asm
 	$(ASM) $(ASMFLAGS) -o $@ $<
