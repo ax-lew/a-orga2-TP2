@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.12.22)  29 SEP 2015 15:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.12.22)  24 NOV 2015 20:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -872,31 +872,40 @@ LaTeX Info: Redefining \% on input line 55.
 File: tiemposCompiladores/gcc.png Graphic file (type png)
 
 <use tiemposCompiladores/gcc.png>
-Package pdftex.def Info: tiemposCompiladores/gcc.png used on input line 14.
+Package pdftex.def Info: tiemposCompiladores/gcc.png used on input line 19.
 (pdftex.def)             Requested size: 339.67029pt x 258.45494pt.
-LaTeX Info: Redefining \. on input line 19.
-LaTeX Info: Redefining \% on input line 19.
+LaTeX Info: Redefining \. on input line 24.
+LaTeX Info: Redefining \% on input line 24.
  [9]
-<tiemposCompiladores/icc.png, id=89, 415.5525pt x 317.68687pt>
+<tiemposCompiladores/icc.png, id=90, 415.5525pt x 317.68687pt>
 File: tiemposCompiladores/icc.png Graphic file (type png)
 
 <use tiemposCompiladores/icc.png>
-Package pdftex.def Info: tiemposCompiladores/icc.png used on input line 23.
+Package pdftex.def Info: tiemposCompiladores/icc.png used on input line 28.
 (pdftex.def)             Requested size: 339.67029pt x 259.68568pt.
 
-<tiemposCompiladores/gccVsIcc.png, id=90, 415.5525pt x 317.68687pt>
+<tiemposCompiladores/gccVsIcc.png, id=91, 415.5525pt x 317.68687pt>
 File: tiemposCompiladores/gccVsIcc.png Graphic file (type png)
 
 <use tiemposCompiladores/gccVsIcc.png>
-Package pdftex.def Info: tiemposCompiladores/gccVsIcc.png used on input line 32
+Package pdftex.def Info: tiemposCompiladores/gccVsIcc.png used on input line 37
 .
 (pdftex.def)             Requested size: 339.67029pt x 259.68568pt.
-LaTeX Info: Redefining \. on input line 37.
-LaTeX Info: Redefining \% on input line 37.
-LaTeX Info: Redefining \. on input line 37.
-LaTeX Info: Redefining \% on input line 37.
- [10 <./tiemposCompiladores/gcc.png> <./tiemposCompiladores/icc.png>]) (./cache
-compiladores/cachecompiladores.tex
+LaTeX Info: Redefining \. on input line 42.
+LaTeX Info: Redefining \% on input line 42.
+LaTeX Info: Redefining \. on input line 42.
+LaTeX Info: Redefining \% on input line 42.
+ [10 <./tiemposCompiladores/gcc.png> <./tiemposCompiladores/icc.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 50--51
+
+ []
+
+LaTeX Info: Redefining \. on input line 60.
+LaTeX Info: Redefining \% on input line 60.
+LaTeX Info: Redefining \. on input line 60.
+LaTeX Info: Redefining \% on input line 60.
+[11 <./tiemposCompiladores/gccVsIcc.png>])
+(./cachecompiladores/cachecompiladores.tex
 Underfull \hbox (badness 10000) in paragraph at lines 3--4
 
  []
@@ -906,11 +915,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 8--9
 
  []
 
-LaTeX Info: Redefining \. on input line 9.
-LaTeX Info: Redefining \% on input line 9.
-LaTeX Info: Redefining \. on input line 9.
-LaTeX Info: Redefining \% on input line 9.
-[11 <./tiemposCompiladores/gccVsIcc.png>]
+
 Underfull \hbox (badness 10000) in paragraph at lines 10--11
 
  []
@@ -920,27 +925,36 @@ Underfull \hbox (badness 10000) in paragraph at lines 12--13
 
  []
 
-<cachecompiladores/tabla.png, id=97, 868.24374pt x 732.7375pt>
+<cachecompiladores/tabla.png, id=98, 868.24374pt x 732.7375pt>
 File: cachecompiladores/tabla.png Graphic file (type png)
 
 <use cachecompiladores/tabla.png>
 Package pdftex.def Info: cachecompiladores/tabla.png used on input line 19.
 (pdftex.def)             Requested size: 424.58624pt x 358.32896pt.
-
+LaTeX Info: Redefining \. on input line 23.
+LaTeX Info: Redefining \% on input line 23.
+LaTeX Info: Redefining \. on input line 23.
+LaTeX Info: Redefining \% on input line 23.
+ [12]
 Underfull \hbox (badness 10000) in paragraph at lines 26--27
 
  []
 
-LaTeX Info: Redefining \. on input line 27.
-LaTeX Info: Redefining \% on input line 27.
-LaTeX Info: Redefining \. on input line 27.
-LaTeX Info: Redefining \% on input line 27.
-[12 <./cachecompiladores/tabla.png>])
+
+Underfull \hbox (badness 10000) in paragraph at lines 33--34
+
+ []
+
+LaTeX Info: Redefining \. on input line 34.
+LaTeX Info: Redefining \% on input line 34.
+LaTeX Info: Redefining \. on input line 34.
+LaTeX Info: Redefining \% on input line 34.
+[13 <./cachecompiladores/tabla.png>])
 LaTeX Info: Redefining \. on input line 63.
 LaTeX Info: Redefining \% on input line 63.
 LaTeX Info: Redefining \. on input line 63.
 LaTeX Info: Redefining \% on input line 63.
- [13] (./diffsinsimd/hipDiff.tex
+ [14] (./diffsinsimd/hipDiff.tex
 Underfull \hbox (badness 10000) in paragraph at lines 2--9
 
  []
@@ -957,7 +971,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 45--50
 
 LaTeX Info: Redefining \. on input line 50.
 LaTeX Info: Redefining \% on input line 50.
-[14] <diffsinsimd/simdSinSIMD.png, id=108, 691.83469pt x 432.11438pt>
+[15] <diffsinsimd/simdSinSIMD.png, id=112, 691.83469pt x 432.11438pt>
 File: diffsinsimd/simdSinSIMD.png Graphic file (type png)
 
 <use diffsinsimd/simdSinSIMD.png>
@@ -973,7 +987,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 65--68
 
  []
 
-<diffsinsimd/ASMssdC.png, id=109, 575.90157pt x 470.50781pt>
+<diffsinsimd/ASMssdC.png, id=113, 575.90157pt x 470.50781pt>
 File: diffsinsimd/ASMssdC.png Graphic file (type png)
 
 <use diffsinsimd/ASMssdC.png>
@@ -983,7 +997,7 @@ LaTeX Info: Redefining \. on input line 78.
 LaTeX Info: Redefining \% on input line 78.
 LaTeX Info: Redefining \. on input line 78.
 LaTeX Info: Redefining \% on input line 78.
- [15 <./diffsinsimd/simdSinSIMD.png>]
+ [16 <./diffsinsimd/simdSinSIMD.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 78--83
 
  []
@@ -993,8 +1007,8 @@ LaTeX Info: Redefining \. on input line 68.
 LaTeX Info: Redefining \% on input line 68.
 LaTeX Info: Redefining \. on input line 68.
 LaTeX Info: Redefining \% on input line 68.
- [16 <./diffsinsimd/ASMssdC.png>] (./conclusion/conclusion.tex
-<conclusion/conclusion.png, id=116, 850.17625pt x 646.415pt>
+ [17 <./diffsinsimd/ASMssdC.png>] (./conclusion/conclusion.tex
+<conclusion/conclusion.png, id=120, 850.17625pt x 646.415pt>
 File: conclusion/conclusion.png Graphic file (type png)
 
 <use conclusion/conclusion.png>
@@ -1010,16 +1024,16 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[17 <./conclusion/conclusion.png>] (./informe.aux
+[18 <./conclusion/conclusion.png>] (./informe.aux
 LaTeX Info: Redefining \. on input line 6.
 LaTeX Info: Redefining \% on input line 6.
 ) ) 
 Here is how much of TeX's memory you used:
- 6971 strings out of 493109
- 100869 string characters out of 6135009
+ 6975 strings out of 493109
+ 100906 string characters out of 6135009
  210039 words of memory out of 5000000
- 10279 multiletter control sequences out of 15000+600000
- 8583 words of font info for 33 fonts, out of 8000000 for 9000
+ 10282 multiletter control sequences out of 15000+600000
+ 8929 words of font info for 34 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  38i,12n,43p,1246b,426s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pf
@@ -1033,12 +1047,13 @@ l/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local
 /texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/
 texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local
 /texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/
-texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/t
-exlive/2014/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on informe.pdf (18 pages, 4409966 bytes).
+texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/t
+exlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/te
+xlive/2014/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on informe.pdf (19 pages, 4424143 bytes).
 PDF statistics:
- 163 PDF objects out of 1000 (max. 8388607)
- 102 compressed objects within 2 object streams
+ 171 PDF objects out of 1000 (max. 8388607)
+ 108 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  91 words of extra memory for PDF output out of 10000 (max. 10000000)
 

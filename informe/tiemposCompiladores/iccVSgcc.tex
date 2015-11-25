@@ -1,9 +1,14 @@
 \subsection{Resumen}
 Queremos corroborar que el compilardo icc es mejor, en terminos temporales (mas adelante se analizara el comportamiento respecto de la cache), que el compilador gcc.
+Para esto vamos a dividir el experimento en dos partes. Primero vamos a ver como se comportan ambos compiladores en costos temporales y en cuando a manejo de la caché sin ninguna opción de optimización. Luego vamos a ver como se comportan ambos compiladores con la opción de optimización \textit{-o3}. Lo que esperamos ver con estas mediciones es una ventaja a favor el compilador ICC.
+
+
 
 \subsection{Experimentacion}
 Para analizar los compiladores usaremos el filtro diff. Lo aplicaremos sobre cuatro imagenes, de diferente tamaño. Sobre cada imagen, correremos el filtro varias veces, dado que los procesos de nuestra computadora pueden afectar temporalmente a los filtros. De esta manera, nos aproximaremos mas al resultado real. Calcularemos la desviacion estandar, para reflejar que solo es una aproximacion \\
-Para cada imagen, la procesamos utilizando ambos compiladores y anotamos los tiempos (en ciclo de clocks), y a estos, los dividimos por la cantidad de pixel de la imagen. Asi, obtenemos cuanto tarda, en promedio, procesar un pixel. Luego, de estos valores, obtenemos la media y la desviacion estandar. Tomaremos el tamaño de la imagen como la cantidad de pixeles, dado que se procesan todos los pixeles en orden consecutivo, con lo cual no habria diferencia si la imagen tuviera otra largo o ancho
+Para cada imagen, la procesamos utilizando ambos compiladores y anotamos los tiempos (en ciclo de clocks), y a estos, los dividimos por la cantidad de pixel de la imagen. Asi, obtenemos cuanto tarda, en promedio, procesar un pixel. Luego, de estos valores, obtenemos la media y la desviacion estandar. Tomaremos el tamaño de la imagen como la cantidad de pixeles, dado que se procesan todos los pixeles en orden consecutivo, con lo cual no habria diferencia si la imagen tuviera otra largo o ancho.
+
+\subsection{ICC vs GCC sin optimización}
 
 \subsection{Resultados}
 Hechas las mediciones, obtenemos lo siguiente
@@ -36,7 +41,22 @@ Hechas las mediciones, obtenemos lo siguiente
 \end{figure}
 
 Podemos analizar las siguientes cosas de los resultados obtenidos: \\
-Primero, en la imagen mas pequeña, el tiempo de procesamiento por pixel es bastante mayor que en las imagenes mas grandes, en las cuales el tiempo por pixel es casi el mismo. Esto sucede en ambos compiladores. Creemos que esto puede deberse a que hay alguno/algunos procesos en la computadora que no son constantes (es decir, no ocurren cada x cantidad de ciclos) y que influyen en los tiempos. Por eso para imagenes pequeñas se nota su influencia, pero para imagenes grandes no. Tiene sentido entoneces, que la desviacion estandar nos de mucho mas alta en la imagen de menor tamaño
-Segundo, si bien para la imagen mas pequeña se puede observar que el compilador icc procesa mas rapido, no existe tal diferencia para las imagenes mas grandes. Incluso, en la imagen mas grande, es mas rapido (aunque la diferencia es cercana al 1$\%$)
+Primero, en la imagen mas pequeña, el tiempo de procesamiento por pixel es bastante mayor que en las imagenes mas grandes, en las cuales el tiempo por pixel es casi el mismo. Esto sucede en ambos compiladores. Creemos que esto puede deberse a que hay alguno/algunos procesos en la computadora que no son constantes (es decir, no ocurren cada x cantidad de ciclos) y que influyen en los tiempos. Por eso para imagenes pequeñas se nota su influencia, pero para imagenes grandes no. Tiene sentido entonces, que la desviacion estandar nos de mucho mas alta en la imagen de menor tamaño.\\
+Segundo, si bien para la imagen mas pequeña se puede observar que el compilador icc procesa mas rapido, no existe tal diferencia a la hora de procear imagenes mas grandes. Incluso, en la imagen mas grande, es mas rapido (aunque la diferencia es cercana al 1$\%$)
+En estas primeras observaciones no tenemos ninguna evidencia que confirme o refute nuestra hipótesis. Vamos a experimentar ahora con ambos compiladores con las opciones de optimización activas.
+
+\subsection{GCC vs ICC con optimización }
+
+Para esta parte del experimento lo que vamos a hacer es activar la opción \textit{-O3} para ambos compiladores. Una vez activada esta opción vamos a realizar devuelta varios experimentos, con varias imágenes, comparando ambos compiladores.\\
+
+
+ACA HAY QUE INSERTAR UN GRAFICO QUE MIDA EL RENDIMIENTO EN CUANTO AL TIEMPO ENTRE AMBOS COMPILADORES CON LA OPCION -O3 PARA VARIAS IMAGENES.
+
+Como muestra la figura anterior podemos observar una amplia diferencia a favor del compilador $icc/ gcc$ lo cual nos predispone a pensar que efectivamente el compilador $icc/ gcc$ es mucho más eficiente.\\
+Para corroborar definitivamente nuestra hipótesis vamos a realizar varios experimentos más y esta vez no vamos a medir el factor tiempo sino que vamos a evaluar el manejo de la caché por parte de ambos.
+
+
+
 \subsection{Conclusion}
-Refutamos, tristemente, nuestra hipotesis y concluimos entonces que el compilador icc no tiene ventaja sobre gcc. Compararemos mas adelante el uso de la cache, pero, a priori, no vale la pena gastar plata en icc.
+ACA HAY QUE DECIR QUIEN GANA
+Compararemos mas adelante el uso de la cache, pero, a priori, no vemos ninguna ventaja a favor del ICC.
