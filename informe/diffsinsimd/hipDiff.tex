@@ -63,7 +63,7 @@ Primero voy a hacer varios casos de prueba entre ambas implementaciones para ana
  Como esperabamos, el uso del modelo SIMD es muy superior ya que tiene menor cantidad de iteraciones, menor acceso a memoria por iteración y mayor capacidad de pocesamiento. No hay necesidad de examinarlo mas a fondo ya que hoy en día casi se puede realizar una demostración formal sobre la ventaja de SIMD sobre asm sin usar SIMD\\
 \subsection{La implementación en C es más rápida que la implementación en Assemler sin SIMD}
  A continuación vamos a comparar el rendimiento entre ĺa implementación del filtro en c y su implementación en assembler sin el uso de SIMD.\\
- Nuestra hipótesis consiste en que la implementación en C es más rápida que la implementación realizada en Assembler. Para tratar de corroborar esto vamos primero a comparar el tiempo en Ticks del reloj utilizados para procesar una imagen en ambas implementaciones.  Lo esperado en este caso es que el filtro en C demore menos. \\ 
+ Para tratar de corroborar nuestra hipótesis vamos primero a comparar el tiempo en Ticks del reloj utilizados para procesar una imagen en ambas implementaciones.  Lo esperado en este caso es que el filtro en C demore menos. \\ 
  El siguiente gráfico muestra, para varias imagenes de distinto tamaño, el tiempo de proceso dado en ticks de reloj de la implementación en C comparado a la implementación en Assembler sin SIMD. \\
 
  \subsection{Gráficos C vs sin SIMD}
@@ -78,8 +78,8 @@ Primero voy a hacer varios casos de prueba entre ambas implementaciones para ana
 El gráfico anterior muestra, a diferencia de lo supuesto anteriormente, un menor tiempo de procesamiento para el filtro implementado assembler sin SIMD.\\
 ¿Y por qué sucede esto?\\
 La diferencia consiste principalmente en que en la implementación de Assembler no hago accesos innecesarios a memoria. Es decir, en cada ciclo accedo en total nueve veces a memoria, ni mas ni menos.\\
- Uno estaría tentado a decir que sucede lo mismo en la implementación del filtro en C, estaría tentado a decir que también accedo esa misma cantidad de veces a memoria pero a diferencia de la implementación en Assembler, accedo más veces indirectamente porque en mi función tengo variables y las variables se guardan en el Stack.\\
- En mi implementación en C de la función diff tengo varias variables y opero con ellas en todo momento ya sea para hacer una resta, para calcular un maximo entre gamas o también incluso para guardar mi resultado en la imagen de destino. Cada una de estas operaciones realizadas con las variables demanda un acceso a memoria, mas específicamente al stack, para poder obtener su valor dando como resultado una mayor cantidad de accesos a memoria y una mayor cantidad de Ticks del reloj en cada iteración del ciclo. Por ende concluimos que nuestra hipótesis resultó ser falsa\\
+ Uno estaría tentado a decir que sucede lo mismo en la implementación del filtro en C, estaría tentado a decir que también accedo esa misma cantidad de veces a memoria pero a diferencia de la implementación en Assembler, accedo más veces indirectamente porque en mi función tengo variables y las variables se guardan en la memoria.\\
+ En nuestra implementación en C de la función diff tengo varias variables y opero con ellas en todo momento ya sea para hacer una resta, para calcular un maximo entre gamas o también incluso para guardar mi resultado en la imagen de destino. Cada una de estas operaciones realizadas con las variables demanda un acceso a memoria para poder obtener su valor dando como resultado una mayor cantidad de accesos a memoria y una mayor cantidad de Ticks del reloj en cada iteración del ciclo. Por ende concluimos que nuestra hipótesis resultó ser falsa\\
  
 
   

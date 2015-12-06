@@ -26,14 +26,21 @@ Primero veremos como es el comportamiento con el filtro blur. Por cuestiones ref
 
 Luego de obtener los resultados y analizarlos observamos que si bien los valores de misses y miss jumps son muy parecidos , no son lo suficientemente parecidos como para concluir que el uso de la cache que hacen ambos compiladores es el mismo. Esto lo deducimos porque vimos que cuando corrimos varias veces el mismo filtro a la misma imagen utilizando siempre solo un compilador, al ver los resultados (los miss cache), estos varian entre si en muy poco (+- diez ), pero si compramos los resultados de misses obtenidos utilizando compiladores diferentes estas variaciones son suficientemente grandes como para ver que definitivamente no hacen lo mismo. \\
 
-Por otro lado si miramos los porcentajes, se observa que ambos tienen exatamente los mismos, por eso concluimos que no eran necesarios graficos, pues los valores son exactamente iguales, para cualquiera de los dos filtros, en cualquier situacion. Finalmente podemos concluir que en realidad los compiladores manejan la cache de maneras distintas al menos sin las optimizaciones activas. Como un detalle, se puede ver que ICC tiende a tener mas misses y miss jumps que GCC. Antes habiamos visto que ICC es un poco mas rápido que GCC. Aquí podemos confirmar que eso no se debe a un mejor uso de la caché.
+Por otro lado si miramos los porcentajes, se observa que ambos tienen exatamente los mismos valores para cualquiera de los dos filtros, en cualquier situacion. Finalmente podemos concluir que en realidad los compiladores manejan la cache de maneras distintas al menos sin las optimizaciones activas. Como un detalle, se puede ver que ICC tiende a tener mas misses y miss jumps que GCC. Antes habiamos visto que ICC es mas rápido que GCC.
 
 
 \subsection{Experimentaciónes de la caché con optimizaciones activas}
 
-Para esta faceta del experimento vamos a activar la opción de optimización \textit{-O3} para ambos compiladores y vamos a ver como esto influye en el manejo de la memória caché.
-Para medir esa influencia vamos a usar la herramienta de Valgrind \textit{Cachegrind} que nos va a mostrar el valor y el porcentaje de los Miss Jumps y los Data miss.\\
- Lo que esperamos ver en los experimentos realizados en esta sección es un manejo diferenciado de la memoría por ambos compiladores. En particular esperamos ver una ventaja a favor del compilador ICC ya que nuestra hipótesis sostiene que es mejor.\\
+Para esta etapa del experimento vamos a activar la opción de optimización \textit{-O3} para ambos compiladores y vamos a ver como esto influye en el manejo de la memória caché.\\
+Para medir ese aspecto vamos a usar la herramienta de Valgrind \textit{Cachegrind} que nos va a mostrar el valor y el porcentaje de los Miss Jumps y los Data miss.\\
+ Mediante las siguientes mediciones vamos a tratar de corroborar o refutar la hipotesis de que ambos compiladores manejan la moria caché de una manera distinta.\\
+En particular, teniendo en cuenta el experimento realizado anteriormente en el que vimos la ventaja en cuanto al tiempo del ICC sobre el GCC, esperamos ver un mejor manejo también en este aspecto a favor del compilador ICC.\\
+Nota: Las imágenes usadas para estas mediciones fueron las siguientes:\\
+320x480: 480.bmp\\
+512x512: azul24.bmp\\
+800x600: scene0.bmp\\
+1920x1080: 1k.bmp \\
+
 
 \subsection{Datos obtenidos:}
 
@@ -64,5 +71,5 @@ Para medir esa influencia vamos a usar la herramienta de Valgrind \textit{Cacheg
 
 \subsection{Conclusiones:}
 En estas últimas imágenes podemos observar un manejo muy similar por parte de ambos compiladores. Si bien los valores pueden diferir un poco, al final del día, el porcentaje es igual.\\
-Con los experimentos realizados anteriormente y los experimentos detallados en una sección anterior podemos llegar a la conclusión de que los compiladores ICC y GCC sin importar si la optimización \textit{-O3} está activa o no, manejan la caché de manera similar y podemos concluir que si ICC le gana a GCC en cuanto a velocidad eso no se debe a un mejor uso de la caché.
-
+Con los experimentos realizados anteriormente y los experimentos detallados en una sección anterior podemos llegar a la conclusión de que los compiladores ICC y GCC sin importar si la optimización \textit{-O3} está activa o no, manejan la caché de manera similar y podemos concluir que si ICC le gana a GCC en cuanto a velocidad eso no se debe a un mejor uso de la caché.\\
+Antes habiamos visto una mayor velocidad con los filtros compilados con ICC. Aquí podemos confirmar que eso no se debe a un mejor uso de la caché.

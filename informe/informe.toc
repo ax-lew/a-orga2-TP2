@@ -24,7 +24,7 @@
 \contentsline {subsection}{\numberline {4.2}Experimentaciones de cach\IeC {\'e} sin optimizaci\IeC {\'o}n}{13}
 \contentsline {subsection}{\numberline {4.3}Datos obtenidos:}{14}
 \contentsline {subsection}{\numberline {4.4}Conclusion}{14}
-\contentsline {subsection}{\numberline {4.5}Experimentaci\IeC {\'o}nes de la cach\IeC {\'e} con optimizaciones activas}{15}
+\contentsline {subsection}{\numberline {4.5}Experimentaci\IeC {\'o}nes de la cach\IeC {\'e} con optimizaciones activas}{14}
 \contentsline {subsection}{\numberline {4.6}Datos obtenidos:}{15}
 \contentsline {subsection}{\numberline {4.7}Conclusiones:}{16}
 \contentsline {section}{\numberline {5}Hipotesis: asm sin simd es mejor que C}{17}

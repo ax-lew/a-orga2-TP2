@@ -1,6 +1,6 @@
 \subsection{Resumen}
 
-Para imágenes suficientemente grandes, donde la cache no es suficiente, los filtros en asm con simd son muuucho mas rápido que los hechos en C
+Para imágenes suficientemente grandes, donde la cache no es suficiente, los filtros en asm con simd son mucho mas rápidos que los hechos en C
 
 \subsection{Experimentaciones}
 
@@ -14,6 +14,13 @@ Los siguientes experimentos los realizamos sobre el filtro blur, ya que como est
 
 
 Para ver los el uso de la cache utilizaremos el programa valgrind y realizaremos cada experimento varias veces para obtener un promedio sacando outliers. Fijamos como 30 el radio maximo ya que si lo incrementamos mas, el valgrind demora demasiado en emular el comportamiento de la cache (mas de media hoa). A continuacion mostraremos algunos resultados obtenidos con las diferentes imagenes, mostrando su peso y porcentaje de miss. \\
+Para obtener estos datos usamos la herramienta de Valgrind Cachegrind de la siguiente manera: $valgrind --tool=cachegrind filtro$\\
+Las imágenes son las siguientes:\\
+2560x1080: 2k.bmp\\
+192x1080: 1k.bmp\\
+1280x720: sd.bmp\\
+1024x600: 600.bmp\\
+320x480: 480.bmp\\
 
 \subsection{Datos obtenidos}
 

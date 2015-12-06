@@ -54,7 +54,7 @@ En estas primeras observaciones no tenemos ninguna evidencia que confirme o refu
 
 Para esta parte del experimento lo que vamos a hacer es activar la opción \textit{-O3} para ambos compiladores. Una vez activada esta opción vamos a realizar devuelta los experimentos para tratar de ver como influye esta opción en el costo temporal de los filtros.Estos experimentos los vamos a realizar con varias imágenes, aplicandoles el filtro Blur con varios valores distintos y comparando los resultados.\\
 Las siguientes imágenes detallan estos resultados.\\
-Nota: Los valores acá detallados no representan el valor real sino una equivalencia a la hora de graficar. Para obtener el valor real es necesario multiplicar el valor del gráfico por $1.0x10^6$.\\
+Nota: Los valores acá detallados no representan el valor real sino una equivalencia a la hora de graficar. Para obtener el valor real es necesario multiplicar el valor del gráfico por \textit{1.0x10$^$6}.
 320x480: 480.bmp\\
 512x512: azul24.bmp\\
 800x600: scene0.bmp\\
