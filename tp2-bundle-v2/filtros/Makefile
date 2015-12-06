@@ -4,6 +4,8 @@
 #   Trabajo Practico 2                                                      #
 #                                                                           #
 # ************************************************************************* #
+
+CC=gcc
 ASM = nasm
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
@@ -15,7 +17,7 @@ endif
 
 ASMFLAGS = $(ASMFLAGS64)
 
-CFLAGS64 ?=-Wall -Wextra -pedantic -O0 -ggdb
+CFLAGS64 ?=-Wall -Wextra -pedantic -O3 -ggdb
 CFLAGS=$(CFLAGS64)
 
 BUILD_DIR = ../build

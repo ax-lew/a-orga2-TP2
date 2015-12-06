@@ -10,7 +10,7 @@
 \contentsline {subsection}{\numberline {2.1}Resumen}{6}
 \contentsline {subsection}{\numberline {2.2}Experimentaciones}{6}
 \contentsline {subsection}{\numberline {2.3}Datos obtenidos}{7}
-\contentsline {subsection}{\numberline {2.4}Gkur\IeC {\'a}ficos}{7}
+\contentsline {subsection}{\numberline {2.4}Gr\IeC {\'a}ficos}{7}
 \contentsline {subsection}{\numberline {2.5}Conclusion}{8}
 \contentsline {section}{\numberline {3}Hipotesis: El compilador ICC es mas veloz que el GCC}{9}
 \contentsline {subsection}{\numberline {3.1}Resumen}{9}
@@ -19,18 +19,19 @@
 \contentsline {subsection}{\numberline {3.4}Resultados}{9}
 \contentsline {subsection}{\numberline {3.5}GCC vs ICC con optimizaci\IeC {\'o}n }{11}
 \contentsline {subsection}{\numberline {3.6}Conclusion}{12}
-\contentsline {section}{\numberline {4}Hipotesis: El uso de la cache de ICC es diferente al de GCC}{12}
-\contentsline {subsection}{\numberline {4.1}Resumen}{12}
-\contentsline {subsection}{\numberline {4.2}Experimentaciones de cach\IeC {\'e} sin optimizaci\IeC {\'o}n}{12}
-\contentsline {subsection}{\numberline {4.3}Datos obtenidos:}{13}
-\contentsline {subsection}{\numberline {4.4}Conclusion}{13}
-\contentsline {subsection}{\numberline {4.5}Experimentaci\IeC {\'o}nes de la cach\IeC {\'e} con optimizaciones activas}{14}
-\contentsline {subsection}{\numberline {4.6}Conclusiones:}{14}
-\contentsline {section}{\numberline {5}Hipotesis: asm sin simd es mejor que C}{15}
-\contentsline {subsection}{\numberline {5.1}Resumen}{15}
-\contentsline {subsection}{\numberline {5.2}Assembler con SIMD es m\IeC {\'a}s r\IeC {\'a}pido que la Assemler sin SIMD}{15}
-\contentsline {subsection}{\numberline {5.3}Gr\IeC {\'a}ficos SIMD vs sin SIMD}{16}
-\contentsline {subsection}{\numberline {5.4}La implementaci\IeC {\'o}n en C es m\IeC {\'a}s r\IeC {\'a}pida que la implementaci\IeC {\'o}n en Assemler sin SIMD}{16}
-\contentsline {subsection}{\numberline {5.5}Gr\IeC {\'a}ficos C vs sin SIMD}{17}
-\contentsline {section}{\numberline {6}Conclusi\IeC {\'o}n}{18}
-\contentsline {subsection}{\numberline {6.1}Conclusion}{18}
+\contentsline {section}{\numberline {4}Hipotesis: El uso de la cache de ICC es diferente al de GCC}{13}
+\contentsline {subsection}{\numberline {4.1}Resumen}{13}
+\contentsline {subsection}{\numberline {4.2}Experimentaciones de cach\IeC {\'e} sin optimizaci\IeC {\'o}n}{13}
+\contentsline {subsection}{\numberline {4.3}Datos obtenidos:}{14}
+\contentsline {subsection}{\numberline {4.4}Conclusion}{14}
+\contentsline {subsection}{\numberline {4.5}Experimentaci\IeC {\'o}nes de la cach\IeC {\'e} con optimizaciones activas}{15}
+\contentsline {subsection}{\numberline {4.6}Datos obtenidos:}{15}
+\contentsline {subsection}{\numberline {4.7}Conclusiones:}{16}
+\contentsline {section}{\numberline {5}Hipotesis: asm sin simd es mejor que C}{17}
+\contentsline {subsection}{\numberline {5.1}Resumen}{17}
+\contentsline {subsection}{\numberline {5.2}Assembler con SIMD es m\IeC {\'a}s r\IeC {\'a}pido que la Assemler sin SIMD}{17}
+\contentsline {subsection}{\numberline {5.3}Gr\IeC {\'a}ficos SIMD vs sin SIMD}{18}
+\contentsline {subsection}{\numberline {5.4}La implementaci\IeC {\'o}n en C es m\IeC {\'a}s r\IeC {\'a}pida que la implementaci\IeC {\'o}n en Assemler sin SIMD}{18}
+\contentsline {subsection}{\numberline {5.5}Gr\IeC {\'a}ficos C vs sin SIMD}{19}
+\contentsline {section}{\numberline {6}Conclusi\IeC {\'o}n}{20}
+\contentsline {subsection}{\numberline {6.1}Conclusion}{20}

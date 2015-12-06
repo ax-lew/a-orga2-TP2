@@ -1,5 +1,9 @@
-CFLAGS64 = -ggdb -Wall -Wextra -std=c99 -pedantic -m64
-#CFLAGS64 = -O3 -Wall -std=c99 -pedantic -m64
+
+CC=gcc
+#CFLAGS64 = -ggdb -Wall -Wextra -std=c99 -pedantic -m64 -O3 
+#el icc no soporta -pedantic
+CFLAGS64 = -ggdb -Wall -Wextra -std=c99 -m64 -O3
+
 
 
 CFLAGS   = $(CFLAGS64)

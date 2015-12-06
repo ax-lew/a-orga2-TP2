@@ -5,7 +5,8 @@
 #                                                                           #
 # ************************************************************************* #
 
-CFLAGS=-Wall -Wextra -pedantic -O0 -ggdb -std=c99
+CC=gcc
+CFLAGS=-Wall -Wextra -pedantic -O3 -ggdb -std=c99
 
 BUILD_DIR = ../build
 BIN = tp2
@@ -22,8 +23,8 @@ all: $(OBJS_CON_PATH) bmpdiff
 lib: all
 
 $(BUILD_DIR)/%.o: %.c
+	#$(CC) $(CFLAGS) -c -o $@ $<
 	$(CC) $(CFLAGS) -c -o $@ $<
-
 bmpdiff: bmpdiff.c $(OBJS_CON_PATH)
 	$(CC) $(CFLAGS) bmpdiff.c $(OBJS_CON_PATH) -o $(BMPDIFF)
 
